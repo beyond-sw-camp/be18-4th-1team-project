@@ -1,10 +1,10 @@
 HELP.md
 .gradle
-gradle.properties
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+gradle.properties
 src/main/generated/
 
 ### STS ###
@@ -38,37 +38,12 @@ out/
 ### VS Code ###
 .vscode/
 
+.env
 application.yml
 
-# MacOS
-.DS_Store
+*.json
 
+docker-compose.yml
 
-# Gradle
 .gradle/
-
-# IntelliJ / VSCode
-.idea/
-
-# Node / Frontend
 node_modules/
-dist/
-frontend/smerp-client/node_modules/
-frontend/smerp-client/dist/
-frontend/smerp-client/.vite/
-
-# Environment
-.env
-.env.local
-application-*.yml
-docs/secret.yaml
-
-# Logs & temp
-*.log
-*.tmp
-
-# Test Data
-*.sql
-src/test/
-
-
