@@ -71,4 +71,7 @@ docs/secret.yaml
 *.sql
 src/test/
 
+# 시크릿
+**/secret.yaml
+
 
