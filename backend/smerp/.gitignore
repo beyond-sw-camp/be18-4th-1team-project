@@ -38,8 +38,8 @@ out/
 ### VS Code ###
 .vscode/
 
-.env
 application.yml
+application-*.yml
 
 *.json
 
