@@ -38,10 +38,10 @@ out/
 ### VS Code ###
 .vscode/
 
-.env
-application.yml
+#application.yml
+#application-*.yml
 
-*.json
+#*.json
 
 docker-compose.yml
 
