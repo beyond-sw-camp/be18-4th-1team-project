@@ -1,5 +1,6 @@
 spring:
   config:
+    import: optional:file:./smerp/.env[.properties]
     activate:
       on-profile: prod
 
