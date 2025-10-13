@@ -2,9 +2,13 @@ name: Frontend CI (Vue)
 
 on:
   push:
-    branches: [ "main", "develop" ]
+    branches:
+      - main
+      - develop
   pull_request:
-    branches: [ "main", "develop" ]
+    branches:
+      - main
+      - develop
 
 jobs:
   build:
@@ -24,12 +28,12 @@ jobs:
       # Vue 의존성 설치
       - name: Install dependencies
         run: npm ci
-        working-directory: ./frontend
+        working-directory: ./frontend/smerp-client
 
       # Vue 빌드 테스트
       - name: Build frontend
         run: npm run build
-        working-directory: ./frontend
+        working-directory: ./frontend/smerp-client
 
   docker:
     runs-on: ubuntu-latest
@@ -40,7 +44,7 @@ jobs:
 
       # Docker 이미지 빌드
       - name: Build Docker image
-        run: docker build -t smerp-frontend ./frontend
+        run: docker build -t smerp-frontend ./frontend/smerp-client
 
       # (선택) 컨테이너 실행 테스트
       - name: Run container test
