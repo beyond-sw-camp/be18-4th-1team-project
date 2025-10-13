@@ -90,7 +90,7 @@ class UserServiceImpl_CreateUserTest {
     // when & then
     assertThatThrownBy(() -> userService.createUser(request))
         .isInstanceOf(CustomException.class)
-        .hasMessageContaining(ErrorCode.DUPLICATE_EMAIL.name());
+        .hasMessageContaining(ErrorCode.DUPLICATE_EMAIL.getMessage());
   }
 
   @Test
@@ -116,6 +116,6 @@ class UserServiceImpl_CreateUserTest {
     // when & then
     assertThatThrownBy(() -> userService.createUser(request))
         .isInstanceOf(CustomException.class)
-        .hasMessageContaining(ErrorCode.CLIENT_NOT_FOUND.name());
+        .hasMessageContaining(ErrorCode.CLIENT_NOT_FOUND.getMessage());
   }
 }

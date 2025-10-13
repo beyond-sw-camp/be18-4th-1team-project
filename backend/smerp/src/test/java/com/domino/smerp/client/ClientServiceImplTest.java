@@ -60,7 +60,7 @@ public class ClientServiceImplTest {
     // when & then
     assertThatThrownBy(() -> clientService.createClient(request))
         .isInstanceOf(CustomException.class)
-        .hasMessageContaining(ErrorCode.DUPLICATE_COMPANY_NAME.name());
+        .hasMessageContaining(ErrorCode.DUPLICATE_COMPANY_NAME.getMessage());
   }
 
   @Test
@@ -72,7 +72,7 @@ public class ClientServiceImplTest {
     // when & then
     assertThatThrownBy(() -> clientService.deleteClient(1L))
         .isInstanceOf(CustomException.class)
-        .hasMessageContaining(ErrorCode.CLIENT_NOT_FOUND.name());
+        .hasMessageContaining(ErrorCode.CLIENT_NOT_FOUND.getMessage());
   }
 
 }

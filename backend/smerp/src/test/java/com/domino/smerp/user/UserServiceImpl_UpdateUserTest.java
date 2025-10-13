@@ -26,9 +26,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class UserServiceImpl_UpdateUserTest {
 
-  @Mock private UserRepository userRepository;
-  @Mock private ClientRepository clientRepository;
-  @InjectMocks private UserServiceImpl userService;
+  @Mock
+  private UserRepository userRepository;
+  @Mock
+  private ClientRepository clientRepository;
+  @InjectMocks
+  private UserServiceImpl userService;
 
   @Test
   @DisplayName("회원 수정 실패 - 전화번호 중복")
@@ -43,7 +46,7 @@ class UserServiceImpl_UpdateUserTest {
     // when & then
     assertThatThrownBy(() -> userService.updateUser("202401001", request))
         .isInstanceOf(CustomException.class)
-        .hasMessageContaining(ErrorCode.DUPLICATE_PHONE.name());
+        .hasMessageContaining(ErrorCode.DUPLICATE_PHONE.getMessage());
   }
 
   @Test
@@ -60,7 +63,7 @@ class UserServiceImpl_UpdateUserTest {
     // when & then
     assertThatThrownBy(() -> userService.updateUser("202401001", request))
         .isInstanceOf(CustomException.class)
-        .hasMessageContaining(ErrorCode.USER_NOT_FOUND.name());
+        .hasMessageContaining(ErrorCode.USER_NOT_FOUND.getMessage());
   }
 
   @Test
@@ -103,7 +106,7 @@ class UserServiceImpl_UpdateUserTest {
     // when & then
     assertThatThrownBy(() -> userService.updateUser("202401001", request))
         .isInstanceOf(CustomException.class)
-        .hasMessageContaining(ErrorCode.CLIENT_NOT_FOUND.name());
+        .hasMessageContaining(ErrorCode.CLIENT_NOT_FOUND.getMessage());
   }
 
   @Test
