@@ -25,11 +25,6 @@ repositories {
 	maven { url 'https://jitpack.io' }
 }
 
-ext {
-	queryDslVersion = System.getenv("QUERYDSL_VERSION") ?: '7.0'
-}
-
-
 dependencies {
 	// Spring Boot Starter Dependencies
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

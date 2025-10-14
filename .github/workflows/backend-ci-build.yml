@@ -9,7 +9,6 @@ on:
     branches:
       - develop
 
-
 jobs:
   build:
     name: Build
@@ -28,7 +27,7 @@ jobs:
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
           MYSQL_ROOT_HOST: '%'
         ports:
-          - 3306:3306
+          - 3307:3307
         options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
@@ -44,8 +43,10 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./backend/smerp/gradlew
 
+      #컴파일(테스트 포함)
       - name: Build application
-        working-directory: backend/smerp
+        working-directory: ./backend/smerp
+        #build, test용 가짜 환경변수
         env:
           MYSQL_HOST: mariadb
           MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
@@ -53,12 +54,11 @@ jobs:
           SPRING_DATASOURCE_USERNAME: ${{ secrets.MYSQL_USER }}
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
           SPRING_DATASOURCE_DRIVER: ${{ secrets.SPRING_DATASOURCE_DRIVER }}
-          SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3306/${{ secrets.MYSQL_DATABASE }}
-          QUERYDSL_VERSION: ${{ secrets.QUERYDSL_VERSION }}
+          SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3307/${{ secrets.MYSQL_DATABASE }}
           SERVER_PORT: ${{ secrets.SERVER_PORT }}
           ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
           ENCRYPT_SALT: ${{ secrets.ENCRYPT_SALT }}
 
         run: |
           echo "building application"
-          gradle build
+          ./gradlew build -PqueryDslVersion=${{ secrets.QUERYDSLVERSION }}

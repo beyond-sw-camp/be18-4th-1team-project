@@ -1,5 +1,7 @@
 # Build Stage
+
 FROM eclipse-temurin:21-jdk-alpine AS builder
+ARG QUERYDSLVERSION
 
 WORKDIR /app
 
@@ -12,20 +14,14 @@ COPY backend/smerp/src ./src
 RUN chmod +x ./gradlew
 
 #RUN ./gradlew clean build -x test
-RUN ./gradlew clean build -x test -PqueryDslVersion=7.0
+RUN ./gradlew clean build -x test -PqueryDslVersion=${QUERYDSLVERSION}
 
-
-ARG QUERYDSL_VERSION
-
-ENV QUERYDSL_VERSION=${QUERYDSL_VERSION}
 
 # Run Stage
-
 FROM eclipse-temurin:21-jdk-alpine
 
 WORKDIR /app
 
-# curl 설치 명령어 추가
 RUN apk add --no-cache curl
 
 COPY --from=builder /app/build/libs/*.jar app.jar

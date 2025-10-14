@@ -16,14 +16,14 @@ jobs:
       mariadb:
         image: mariadb:11.8.2
         env:
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-          MYSQL_USER: ${{ secrets.MYSQL_USER }}
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.DATABASE }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
+          MYSQL_USER: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+          MYSQL_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
           MYSQL_ROOT_HOST: '%'
 
         ports:
-          - 3306:3306
+          - 3307:3307
         options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
@@ -39,17 +39,18 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./backend/smerp/gradlew
 
+      #컴파일(테스트 포함)
       - name: Build application
         working-directory: backend/smerp
+        #build, test용 가짜 환경변수
         env:
           MYSQL_HOST: mariadb
-          MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-          SPRING_DATASOURCE_USERNAME: ${{ secrets.MYSQL_USER }}
-          SPRING_DATASOURCE_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_PORT: ${{ secrets.DB_PORT }}
+          MYSQL_DATABASE: ${{ secrets.DATABASE }}
+          SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
           SPRING_DATASOURCE_DRIVER: ${{ secrets.SPRING_DATASOURCE_DRIVER }}
-          SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3306/${{ secrets.MYSQL_DATABASE }}
-          QUERYDSL_VERSION: ${{ secrets.QUERYDSL_VERSION }}
+          SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3307/${{ secrets.DATABASE }}
           SERVER_PORT: ${{ secrets.SERVER_PORT }}
           ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
           ENCRYPT_SALT: ${{ secrets.ENCRYPT_SALT }}
@@ -57,7 +58,7 @@ jobs:
 
         run: |
           echo "building application"
-          gradle build
+          ./gradlew build -PqueryDslVersion=${{ secrets.QUERYDSLVERSION }}
 
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -77,10 +78,13 @@ jobs:
 
       - name: Build and push docker image
         env:
-          QUERYDSL_VERSION: ${{ secrets.QUERYDSL_VERSION }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }}
+          QUERYDSLVERSION: ${{ secrets.QUERYDSLVERSION }}
         run: |
           docker build \
             -f backend/smerp/Dockerfile \
-            --build-arg QUERYDSL_VERSION=$QUERYDSL_VERSION \
-            -t pcochoco/backend:$IMAGE_TAG .
-          docker push pcochoco/backend:$IMAGE_TAG
+            --build-arg QUERYDSLVERSION=$QUERYDSLVERSION \
+            -t $DOCKER_USERNAME/$DOCKER_REPOSITORY:$IMAGE_TAG .
+          docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:$IMAGE_TAG
