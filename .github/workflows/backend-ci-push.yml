@@ -80,11 +80,11 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }}
+          IMG_NAME: ${{ secrets.IMG_NAME }}
           QUERYDSLVERSION: ${{ secrets.QUERYDSLVERSION }}
         run: |
           docker build \
             -f backend/smerp/Dockerfile \
             --build-arg QUERYDSLVERSION=$QUERYDSLVERSION \
-            -t $DOCKER_USERNAME/$DOCKER_REPOSITORY:$IMAGE_TAG .
-          docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:$IMAGE_TAG
+            -t $DOCKER_USERNAME/$IMG_NAME:$IMAGE_TAG .
+          docker push $DOCKER_USERNAME/$IMG_NAME:$IMAGE_TAG
