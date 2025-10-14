@@ -1,0 +1,64 @@
+name: backend-ci-build.yml
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    permissions:
+      write-all
+
+    services:
+      mariadb:
+        image: mariadb:11.8.2
+        env:
+          MYSQL_DATABASE: ${{ secrets.DATABASE }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
+          MYSQL_USER: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+          MYSQL_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+          MYSQL_ROOT_HOST: '%'
+        ports:
+          - 3306:3306
+        options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Make gradlew executable
+        run: chmod +x ./backend/smerp/gradlew
+
+      #컴파일(테스트 포함)
+      - name: Build application
+        working-directory: ./backend/smerp
+        #build, test용 가짜 환경변수
+        env:
+          MYSQL_HOST: mariadb
+          MYSQL_PORT: ${{ secrets.DB_PORT }}
+          MYSQL_DATABASE: ${{ secrets.DATABASE }}
+          SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+          SPRING_DATASOURCE_DRIVER: ${{ secrets.SPRING_DATASOURCE_DRIVER }}
+          SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3306/${{ secrets.DATABASE }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
+          ENCRYPT_SALT: ${{ secrets.ENCRYPT_SALT }}
+
+        run: |
+          echo "building application"
+          ./gradlew build -PqueryDslVersion=${{ secrets.QUERYDSLVERSION }}

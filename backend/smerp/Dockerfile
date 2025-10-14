@@ -1,9 +1,32 @@
-FROM gradle:8.10.2-jdk21 AS builder
-WORKDIR /app
-COPY . .
-RUN gradle clean bootJar --no-daemon
+# Build Stage
 
-FROM eclipse-temurin:21-jdk
+FROM eclipse-temurin:21-jdk-alpine AS builder
+ARG QUERYDSLVERSION
+
 WORKDIR /app
+
+COPY backend/smerp/gradlew ./
+COPY backend/smerp/build.gradle backend/smerp/settings.gradle ./
+COPY backend/smerp/gradle ./gradle
+COPY backend/smerp/src ./src
+#COPY backend/smerp/gradle.properties ./
+
+RUN chmod +x ./gradlew
+
+#RUN ./gradlew clean build -x test
+RUN ./gradlew clean build -x test -PqueryDslVersion=${QUERYDSLVERSION}
+
+
+# Run Stage
+FROM eclipse-temurin:21-jdk-alpine
+
+WORKDIR /app
+
+RUN apk add --no-cache curl
+
 COPY --from=builder /app/build/libs/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+EXPOSE 8080
+
+ENTRYPOINT ["java","-jar","app.jar"]
+
