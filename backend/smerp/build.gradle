@@ -44,7 +44,7 @@ dependencies {
 
 	// QueryDsl
 	// Open Feign QueryDSL (latest security patched version)
-	implementation("io.github.openfeign.querydsl:querydsl-core:$queryDslVersion")
+	implementation("io.github.openfeign.querydsl:querydsl-core:${queryDslVersion}")
 	implementation("io.github.openfeign.querydsl:querydsl-jpa:$queryDslVersion")
 
 	// QueryDSL annotation processor - 별도 configuration으로 분리
