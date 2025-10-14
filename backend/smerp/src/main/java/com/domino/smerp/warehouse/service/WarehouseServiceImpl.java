@@ -1,6 +1,8 @@
 package com.domino.smerp.warehouse.service;
 
 import com.domino.smerp.common.dto.PageResponse;
+import com.domino.smerp.common.exception.CustomException;
+import com.domino.smerp.common.exception.ErrorCode;
 import com.domino.smerp.location.service.LocationService;
 import com.domino.smerp.lotno.dto.request.SearchLotNumberRequest;
 import com.domino.smerp.lotno.dto.response.LotNumberListResponse;
@@ -33,8 +35,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     //id 없는 경우
     Warehouse warehouse = warehouseRepository.findById(id)
-        .orElseThrow(() -> new EntityNotFoundException("No warehouse of id"));
-
+        .orElseThrow(() -> new CustomException(ErrorCode.WAREHOUSE_NOT_FOUND));
     return toWarehouseResponse(warehouse);
   }
 
@@ -70,8 +71,7 @@ public class WarehouseServiceImpl implements WarehouseService {
   public void deleteWarehouse(final Long id) {
 
     warehouseRepository.findById(id)
-        .orElseThrow(() -> new EntityNotFoundException("No warehouse of id"));
-
+        .orElseThrow(() -> new CustomException(ErrorCode.WAREHOUSE_NOT_FOUND));
     warehouseRepository.deleteById(id);
   }
 
@@ -80,9 +80,8 @@ public class WarehouseServiceImpl implements WarehouseService {
   public WarehouseResponse createWarehouse(final WarehouseRequest warehouseRequest) {
 
     //name 이미 있는 경우 안됨
-    if (warehouseRepository.existsByName(warehouseRequest.getName())) {
-      throw new IllegalArgumentException("Warehouse name duplicated");
-    }
+    if (warehouseRepository.existsByName(warehouseRequest.getName()))
+      throw new CustomException(ErrorCode.WAREHOUSE_DUPLICATE_NAME);
 
     Warehouse warehouse = Warehouse.create(warehouseRequest);
 
@@ -99,12 +98,12 @@ public class WarehouseServiceImpl implements WarehouseService {
   public WarehouseResponse updateWarehouse(final Long id, final WarehouseRequest warehouseRequest) {
 
     Warehouse warehouse = warehouseRepository.findById(id)
-        .orElseThrow(() -> new EntityNotFoundException("No warehouse of id"));
+        .orElseThrow(() -> new CustomException(ErrorCode.WAREHOUSE_NOT_FOUND));
 
     //수정하는 경우 대상 warehouse와 동일 이름 아닌 경우 db에 동일 이름 있을 때 불가
     if (!warehouseRequest.getName().equals(warehouse.getName()) &&
         warehouseRepository.existsByName(warehouseRequest.getName())) {
-      throw new IllegalArgumentException("Warehouse name duplicated");
+      throw new CustomException(ErrorCode.WAREHOUSE_DUPLICATE_NAME);
     }
 
     //warehouse 수정

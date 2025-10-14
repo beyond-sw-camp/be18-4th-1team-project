@@ -110,8 +110,11 @@ public enum ErrorCode {
 
 
     // 전표 생성 예외 정보
-    DOCUMENT_NO_GENERATION_FAILED(HttpStatus.CONFLICT, "DOCUMENT_NO_GENERATION_FAILED", "전표번호 생성에 실패했습니다.");
+    DOCUMENT_NO_GENERATION_FAILED(HttpStatus.CONFLICT, "DOCUMENT_NO_GENERATION_FAILED", "전표번호 생성에 실패했습니다."),
 
+    //WAREHOUSE
+    WAREHOUSE_NOT_FOUND(HttpStatus.NOT_FOUND, "WAREHOUSE_NOT_FOUND", "없는 창고입니다."),
+    WAREHOUSE_DUPLICATE_NAME(HttpStatus.CONFLICT, "WAREHOUSE_DUPLICATE_NAME", "창고 이름 중복됩니다.");
     private final HttpStatus status;
     private final String code;
     private final String message;
