@@ -99,14 +99,29 @@ class ProductionPlanServiceImpl_CreatePlanTest {
         .qty(new BigDecimal("100.000"))
         .build();
 
-    User mockUser = User.builder().userId(1L).name("John").build();
-
     when(productionPlanRepository.existsByTitle("Test Plan")).thenReturn(true);
 
     // then
     assertThatThrownBy(() -> productionPlanService.createProductionPlan(request))
         .isInstanceOf(CustomException.class)
         .hasMessageContaining(ErrorCode.PRODUCTION_PLAN_DUPLICATE_TITLE.getMessage());
+  }
+
+  @Test
+  @DisplayName("생산계획 생성 실패 - 수량 음수")
+  void createProductionPlan_fail_qtyNegative() {
+    // given
+    CreateProductionPlanRequest request = CreateProductionPlanRequest.builder()
+        .title("Test Plan")
+        .name("John")
+        .remark("Test Remark")
+        .qty(new BigDecimal("-100.000"))
+        .build();
+
+    // then
+    assertThatThrownBy(() -> productionPlanService.createProductionPlan(request))
+        .isInstanceOf(CustomException.class)
+        .hasMessageContaining(ErrorCode.QTY_UNDER_ZERO.getMessage());
   }
 
 

@@ -16,6 +16,7 @@ import com.domino.smerp.productionplan.repository.ProductionPlanRepository;
 import com.domino.smerp.user.User;
 import com.domino.smerp.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +102,9 @@ public class ProductionPlanServiceImpl implements ProductionPlanService {
     if (productionPlanRepository.existsByTitle(createProductionPlanRequest.getTitle())) {
       throw new CustomException(ErrorCode.PRODUCTION_PLAN_DUPLICATE_TITLE);
     }
+
+    if(createProductionPlanRequest.getQty().compareTo(BigDecimal.ZERO) < 0)
+      throw new CustomException(ErrorCode.QTY_UNDER_ZERO);
 
     User user = userRepository.findByName(createProductionPlanRequest.getName())
         .orElse(null);
@@ -255,6 +259,9 @@ public class ProductionPlanServiceImpl implements ProductionPlanService {
         && !updateProductionPlanRequest.getTitle().equals(productionPlan.getTitle())) {
       throw new CustomException(ErrorCode.PRODUCTION_PLAN_DUPLICATE_TITLE);
     }
+
+    if((updateProductionPlanRequest.getQty() != null) && (updateProductionPlanRequest.getQty().compareTo(BigDecimal.ZERO)) < 0)
+      throw new CustomException(ErrorCode.QTY_UNDER_ZERO);
 
     User user = updateProductionPlanRequest.getName() != null?
     userRepository.findByName(updateProductionPlanRequest.getName())

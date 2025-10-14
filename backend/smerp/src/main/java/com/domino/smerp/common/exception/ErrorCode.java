@@ -113,6 +113,7 @@ public enum ErrorCode {
     PRODUCTION_PLAN_NOT_FOUND(HttpStatus.NOT_FOUND, "PRODUCTION_PLAN_NOT_FOUND", "존재하지 않는 계획입니다."),
     PRODUCTION_PLAN_DELETED(HttpStatus.NOT_FOUND, "PRODUCTION_PLAN_DELETED", "계획이 이미 (SOFTLY)삭제되었습니다."),
     PRODUCTION_PLAN_NOT_DELETED(HttpStatus.NOT_FOUND, "PRODUCTION_PLAN_NOT_DELETED", "계획이 (SOFTLY) 삭제되지 않았습니다."),
+    QTY_UNDER_ZERO(HttpStatus.BAD_REQUEST, "QTY_UNDER_ZERO", "수량은 음수 불가합니다."),
 
     // 전표 생성 예외 정보
     DOCUMENT_NO_GENERATION_FAILED(HttpStatus.CONFLICT, "DOCUMENT_NO_GENERATION_FAILED", "전표번호 생성에 실패했습니다.");
