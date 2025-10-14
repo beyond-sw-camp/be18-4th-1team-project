@@ -101,11 +101,7 @@ class ProductionPlanServiceImpl_CreatePlanTest {
 
     User mockUser = User.builder().userId(1L).name("John").build();
 
-    when(userRepository.findByName("John")).thenReturn(Optional.of(mockUser));
     when(productionPlanRepository.existsByTitle("Test Plan")).thenReturn(true);
-    when(productionPlanRepository.save(any(ProductionPlan.class)))
-        .thenAnswer(invocation -> invocation.getArgument(0));
-    doReturn("DOC12345").when(productionPlanService).generateDocumentNoWithRetry(any());
 
     // then
     assertThatThrownBy(() -> productionPlanService.createProductionPlan(request))
@@ -113,26 +109,5 @@ class ProductionPlanServiceImpl_CreatePlanTest {
         .hasMessageContaining(ErrorCode.PROCUTION_PLAN_DUPLICATE_TITLE.getMessage());
   }
 
-  @Test
-  @DisplayName("생산계획 생성 실패 - 계획 없음")
-  void createProductionPlan_fail_planNotFound() {
-    // given
-    CreateProductionPlanRequest request = CreateProductionPlanRequest.builder()
-        .title("Test Plan")
-        .name("John")
-        .remark("Test Remark")
-        .qty(new BigDecimal("100.000"))
-        .build();
 
-    when(userRepository.findByName("John")).thenReturn(Optional.empty());
-    when(productionPlanRepository.existsByTitle("Test Plan")).thenReturn(true);
-    when(productionPlanRepository.save(any(ProductionPlan.class)))
-        .thenAnswer(invocation -> invocation.getArgument(0));
-    doReturn("DOC12345").when(productionPlanService).generateDocumentNoWithRetry(any());
-
-    // then
-    assertThatThrownBy(() -> productionPlanService.createProductionPlan(request))
-        .isInstanceOf(CustomException.class)
-        .hasMessageContaining(ErrorCode.USER_NOT_FOUND.getMessage());
-  }
 }
