@@ -23,7 +23,7 @@ jobs:
           MYSQL_ROOT_HOST: '%'
 
         ports:
-          - 3307:3307
+          - 3306:3306
         options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
@@ -50,7 +50,7 @@ jobs:
           SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
           SPRING_DATASOURCE_DRIVER: ${{ secrets.SPRING_DATASOURCE_DRIVER }}
-          SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3307/${{ secrets.DATABASE }}
+          SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3306/${{ secrets.DATABASE }}
           SERVER_PORT: ${{ secrets.SERVER_PORT }}
           ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
           ENCRYPT_SALT: ${{ secrets.ENCRYPT_SALT }}
