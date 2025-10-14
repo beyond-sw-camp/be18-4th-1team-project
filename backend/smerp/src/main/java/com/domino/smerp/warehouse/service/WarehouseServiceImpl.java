@@ -4,16 +4,14 @@ import com.domino.smerp.common.dto.PageResponse;
 import com.domino.smerp.common.exception.CustomException;
 import com.domino.smerp.common.exception.ErrorCode;
 import com.domino.smerp.location.service.LocationService;
-import com.domino.smerp.lotno.dto.request.SearchLotNumberRequest;
-import com.domino.smerp.lotno.dto.response.LotNumberListResponse;
 import com.domino.smerp.warehouse.Warehouse;
+import com.domino.smerp.warehouse.dto.request.CreateWarehouseRequest;
 import com.domino.smerp.warehouse.dto.request.SearchWarehouseRequest;
 import com.domino.smerp.warehouse.dto.response.WarehouseListResponse;
 import com.domino.smerp.warehouse.repository.WarehouseRepository;
-import com.domino.smerp.warehouse.dto.request.WarehouseRequest;
+import com.domino.smerp.warehouse.dto.request.UpdateWarehouseRequest;
 import com.domino.smerp.warehouse.dto.response.WarehouseIdListResponse;
 import com.domino.smerp.warehouse.dto.response.WarehouseResponse;
-import jakarta.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -77,7 +75,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
   @Override
   @Transactional
-  public WarehouseResponse createWarehouse(final WarehouseRequest warehouseRequest) {
+  public WarehouseResponse createWarehouse(final CreateWarehouseRequest warehouseRequest) {
 
     //name 이미 있는 경우 안됨
     if (warehouseRepository.existsByName(warehouseRequest.getName()))
@@ -95,7 +93,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
   @Override
   @Transactional
-  public WarehouseResponse updateWarehouse(final Long id, final WarehouseRequest warehouseRequest) {
+  public WarehouseResponse updateWarehouse(final Long id, final UpdateWarehouseRequest warehouseRequest) {
 
     Warehouse warehouse = warehouseRepository.findById(id)
         .orElseThrow(() -> new CustomException(ErrorCode.WAREHOUSE_NOT_FOUND));
