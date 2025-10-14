@@ -31,8 +31,5 @@ public class ProductionPlanResponse {
   private final String documentNo;
 
   @NotNull
-  private final boolean isDeleted;
-
-  @NotNull
   private final BigDecimal qty;
 }

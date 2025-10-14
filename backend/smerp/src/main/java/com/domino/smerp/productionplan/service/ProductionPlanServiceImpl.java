@@ -99,7 +99,7 @@ public class ProductionPlanServiceImpl implements ProductionPlanService {
 
     //title 유일(soft delete 된 것 포함)
     if (productionPlanRepository.existsByTitle(createProductionPlanRequest.getTitle())) {
-      throw new CustomException(ErrorCode.PROCUTION_PLAN_DUPLICATE_TITLE);
+      throw new CustomException(ErrorCode.PRODUCTION_PLAN_DUPLICATE_TITLE);
     }
 
     User user = userRepository.findByName(createProductionPlanRequest.getName())
@@ -253,7 +253,7 @@ public class ProductionPlanServiceImpl implements ProductionPlanService {
     //title 유일 - soft delete의 복원가능성 있어서 배제 x
     if (productionPlanRepository.existsByTitle(updateProductionPlanRequest.getTitle())
         && !updateProductionPlanRequest.getTitle().equals(productionPlan.getTitle())) {
-      throw new IllegalArgumentException("Production Plan title duplicated");
+      throw new CustomException(ErrorCode.PRODUCTION_PLAN_DUPLICATE_TITLE);
     }
 
     User user = updateProductionPlanRequest.getName() != null?
@@ -313,7 +313,6 @@ public class ProductionPlanServiceImpl implements ProductionPlanService {
         .remark(productionPlan.getRemark())
         .title(productionPlan.getTitle())
         .documentNo(productionPlan.getDocumentNo())
-        .isDeleted(productionPlan.isDeleted()) //getIsDeleted x
         .build();
   }
 }

@@ -106,7 +106,7 @@ class ProductionPlanServiceImpl_CreatePlanTest {
     // then
     assertThatThrownBy(() -> productionPlanService.createProductionPlan(request))
         .isInstanceOf(CustomException.class)
-        .hasMessageContaining(ErrorCode.PROCUTION_PLAN_DUPLICATE_TITLE.getMessage());
+        .hasMessageContaining(ErrorCode.PRODUCTION_PLAN_DUPLICATE_TITLE.getMessage());
   }
 
 
