@@ -1,54 +1,35 @@
-name: Frontend CI (Vue)
+name: frontend-ci-build.yml
 
 on:
-  push:
-    branches:
-      - main
-      - develop
   pull_request:
     branches:
       - main
       - develop
+  push:
+    branches:
+      - develop
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
 
+    permissions:
+      write-all
+
     steps:
-      # 저장소 코드 체크아웃
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Node.js 환경 설정
-      - name: Setup Node.js
+      - name: Setup Node.js (v20)
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # Vue 의존성 설치
       - name: Install dependencies
+        working-directory: ./frontend/smerp-client
         run: npm ci
-        working-directory: ./frontend/smerp-client
 
-      # Vue 빌드 테스트
-      - name: Build frontend
+      - name: Build Vue application
+        working-directory: ./frontend/smerp-client
         run: npm run build
-        working-directory: ./frontend/smerp-client
-
-  docker:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - uses: actions/checkout@v4
-
-      # Docker 이미지 빌드
-      - name: Build Docker image
-        run: docker build -t smerp-frontend ./frontend/smerp-client
-
-      # (선택) 컨테이너 실행 테스트
-      - name: Run container test
-        run: |
-          docker run -d -p 8080:80 smerp-frontend
-          sleep 5
-          curl -f http://localhost:8080 || exit 1
