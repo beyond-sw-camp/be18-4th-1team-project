@@ -61,6 +61,13 @@ public enum ErrorCode {
     // lot_number - 409
     DUPLICATE_LOTNUMBER(HttpStatus.CONFLICT, "DUPLICATE_LOTNUMBER", "이미 사용중인 Lot.No입니다."),
 
+    // stock
+    STOCK_NOT_FOUND(HttpStatus.NOT_FOUND, "STOCK_NOT_FOUND", "품목에 대한 재고가 없습니다."),
+    STOCK_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "STOCK_NOT_ENOUGH", "빼낼 재고 수량이 충분하지 않습니다."),
+    NO_WAREHOUSE_EMPTY(HttpStatus.BAD_REQUEST, "NO_WAREHOUSE_EMPTY", "재고를 넣을 창고 공간이 없습니다."),
+    LOCATION_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "LOCATION_NOT_ENOUGH", "재고를 넣을 창고 공간이 부족합니다."),
+    ITEM_ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, "ITEM_ORDER_NOT_FOUND", "주문 품목 이 없습니다."),
+
     // order - 주문과 관련된 예외 정보
     ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, "ORDER_NOT_FOUND", "존재하지 않는 주문입니다."),
     ITEMS_REQUIRED(HttpStatus.BAD_REQUEST, "ITEMS_REQUIRED", "주문에는 최소 1개 이상의 품목이 필요합니다."),
