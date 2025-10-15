@@ -1,5 +1,7 @@
 package com.domino.smerp.stock.service;
 
+import com.domino.smerp.common.exception.CustomException;
+import com.domino.smerp.common.exception.ErrorCode;
 import com.domino.smerp.item.Item;
 import com.domino.smerp.item.repository.ItemRepository;
 import com.domino.smerp.itemorder.ItemOrder;
@@ -78,7 +80,7 @@ public class StockServiceImpl implements StockService {
   @Transactional(readOnly = true)
   public StockResponse getStockById(Long stockId){
     Stock stock = stockRepository.findById(stockId)
-        .orElseThrow(() -> new EntityNotFoundException("Stock not found by id"));
+        .orElseThrow(() -> new CustomException(ErrorCode.STOCK_NOT_FOUND));
     return toStockResponse(stock);
   }
 
@@ -90,12 +92,12 @@ public class StockServiceImpl implements StockService {
 
     List<Warehouse> availableWarehouses = warehouseRepository.findAvailableWarehousesWithCurQty();
     if (availableWarehouses.isEmpty()) {
-      throw new RuntimeException("빈 위치가 있는 창고가 없습니다.");
+      throw new CustomException(ErrorCode.NO_WAREHOUSE_EMPTY);
     }
 
 
     Item item = itemRepository.findById(itemId)
-        .orElseThrow(() -> new EntityNotFoundException("item not found by id"));
+        .orElseThrow(() -> new CustomException(ErrorCode.ITEM_NOT_FOUND));
 
     BigDecimal remainingQty = qty;
 
@@ -118,15 +120,11 @@ public class StockServiceImpl implements StockService {
         //max, cur 기본값 있으므로 null check x
         BigDecimal available = loc.getMaxQty().subtract(loc.getCurQty());
 
-
-
         //남은 공간보다 가용 공간 크면 남은 공간만큼
         //남은 공간보다 가용 공간이 작으면 남은 공간만큼
         BigDecimal allocateQty = remainingQty.min(available);
 
         runningTotal = runningTotal.add(allocateQty);
-
-
 
         if(available.compareTo(BigDecimal.ZERO) <= 0) continue;
 
@@ -156,7 +154,7 @@ public class StockServiceImpl implements StockService {
     }
 
     if (remainingQty.compareTo(BigDecimal.ZERO) > 0) {
-      throw new RuntimeException("수량을 모두 넣을 공간이 없습니다. 남은 수량: " + remainingQty);
+      throw new CustomException(ErrorCode.LOCATION_NOT_ENOUGH);
     }
 
     return createdStocks;
@@ -164,61 +162,39 @@ public class StockServiceImpl implements StockService {
 
   @Transactional
   @Override
-  public List<Stock> removeStock(Long itemId, BigDecimal qty, User user) {
+  public List<Stock> removeStock(Long itemId, BigDecimal qty) {
 
     BigDecimal remainQty = qty; //빼야할 수량
-
-    List<Warehouse> availableWarehouses = warehouseRepository.findWarehousesWithStock(itemId);
     Item item = itemRepository.findById(itemId)
-        .orElseThrow(() -> new EntityNotFoundException("item not found by id"));
+        .orElseThrow(() -> new CustomException(ErrorCode.ITEM_NOT_FOUND));
+    BigDecimal runningTotalQty = getTotalStock(itemId);
 
+    if(runningTotalQty.compareTo(remainQty) < 0) {
+      throw new CustomException(ErrorCode.STOCK_NOT_ENOUGH);
+    }
+    List<Stock> stocks = stockRepository.findAllByItemId(itemId);
     List<Stock> stocksRemoved = new ArrayList<>();
     LotNumber lotNumber = lotNumberService.createLotNumberForStock(item, qty);
 
-
-    BigDecimal runningTotalQty = getTotalStock(itemId);
-
-    for(Warehouse warehouse : availableWarehouses) {
-      //빼야할 수량 없으면 x
+    for(Stock stock : stocks) {
       if(remainQty.compareTo(BigDecimal.ZERO) <= 0) break;
+      BigDecimal removeQty = stock.getQty().min(remainQty);
 
-      //위치 단위로 재고 소진
-      List<Stock> stocks = stockRepository.findByItemIdAndWarehouseId(itemId, warehouse.getId());
+      //현 위치 재고 감소
+      stock.setQty(stock.getQty().subtract(removeQty));
+      stock.setLotNumber(lotNumber);
+      //총 재고 수량 - 각 변화되는 값 누적
+      runningTotalQty = runningTotalQty.subtract(removeQty);
+      stock.setCurrentQty(runningTotalQty);
+      stockRepository.save(stock);
 
-      for(Stock stock : stocks) {
-        //빼야할 수량 없으면 x
-        if(remainQty.compareTo(BigDecimal.ZERO) <= 0) break;
+      Location location = stock.getLocation();
+      location.setCurQty(location.getCurQty().subtract(removeQty));
+      locationRepository.save(location);
 
-        //위치 중 해당 재고 자체만의 수량으로 비교
-
-        //매 회차 빼줄 대상
-        //위치에 남아있는 재고 > 출고수량 : 출고수량만큼만 빼기
-        //위치에 남은 재고 < 출고수량 : 남아있는 재고만큼만 빼기
-        BigDecimal removeQty = stock.getQty().min(remainQty);
-
-        //현 위치의 재고 감소
-        stock.setQty(stock.getQty().subtract(removeQty));
-        stock.setLotNumber(lotNumber);
-        //총 재고 수량 - 각 변화되는 값 누적
-        runningTotalQty = runningTotalQty.subtract(removeQty);
-        stock.setCurrentQty(stock.getQty().subtract(removeQty));
-
-        stock.setCurrentQty(runningTotalQty);
-
-
-        stockRepository.save(stock);
-
-        Location location = stock.getLocation();
-        location.setCurQty(location.getCurQty().subtract(removeQty));
-        locationRepository.save(location);
-
-        //출고해야할 수량 감소
-        remainQty = remainQty.subtract(removeQty);
-
-        //재고 qty == 0이더라도 유지 -> 재고 삭제 x
-        stocksRemoved.add(stock);
-        System.out.println("Stock " + stock.getId() + " currentQty=" + stock.getCurrentQty());
-      }
+      //출고해야할 수량 감소
+      remainQty = remainQty.subtract(removeQty);
+      stocksRemoved.add(stock); //실제 삭제 x : 수량 0이더라도 재고 유지됨
     }
     return stocksRemoved;
   }
@@ -258,7 +234,7 @@ public class StockServiceImpl implements StockService {
   public boolean isAboveSafetyStock(Long itemId){
 
     Item item =  itemRepository.findById(itemId)
-        .orElseThrow(() -> new EntityNotFoundException("no item of id"));
+        .orElseThrow(() -> new CustomException(ErrorCode.ITEM_NOT_FOUND));
 
     //품목에 대한 총 재고
     BigDecimal totalQty = getTotalStock(itemId);
@@ -272,7 +248,7 @@ public class StockServiceImpl implements StockService {
   @Transactional(readOnly = true)
   public boolean isAboveItemOrderQty(Long itemOrderId) {
     ItemOrder itemOrder = itemOrderRepository.findById(itemOrderId)
-        .orElseThrow(() -> new EntityNotFoundException("no item order of id"));
+        .orElseThrow(() -> new CustomException(ErrorCode.ITEM_ORDER_NOT_FOUND));
 
     //해당 item의 총 재고
     BigDecimal totalQty = stockRepository.sumQuantityByItemId(itemOrder.getItem().getItemId());
