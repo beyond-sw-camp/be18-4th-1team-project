@@ -126,10 +126,11 @@ public class ItemServiceImpl_CreateItemTest {
         when(itemStatusRepository.findById(1L)).thenReturn(Optional.of(itemStatus));
         when(itemRepository.existsByName("볼트")).thenReturn(true); // 이미 존재
 
-        // Act & Assert
+        // Act
         CustomException exception = assertThrows(CustomException.class,
                                                  () -> itemServiceImpl.createItem(request));
 
+        // Assert
         assertEquals(ErrorCode.DUPLICATE_ITEM, exception.getErrorCode());
         verify(itemRepository, never()).save(any(Item.class));
     }
@@ -162,10 +163,11 @@ public class ItemServiceImpl_CreateItemTest {
         when(itemRepository.existsByName("볼트")).thenReturn(false);
         when(itemRepository.existsByRfid("RFID-001")).thenReturn(true); // 중복 RFID
 
-        // Act & Assert
+        // Act
         CustomException exception = assertThrows(CustomException.class,
                                                  () -> itemServiceImpl.createItem(request));
 
+        // Assert
         assertEquals(ErrorCode.DUPLICATE_RFID, exception.getErrorCode());
         verify(itemRepository, never()).save(any(Item.class));
     }

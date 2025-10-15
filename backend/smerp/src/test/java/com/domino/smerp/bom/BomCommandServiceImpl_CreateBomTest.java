@@ -51,7 +51,7 @@ public class BomCommandServiceImpl_CreateBomTest {
     @Test
     @DisplayName("정상적인 BOM 생성 시 BOM이 저장되고 이벤트가 발행된다")
     void createBom_success() {
-        // Arrange — 테스트 준비
+        // Arrange
         CreateBomRequest request = CreateBomRequest.builder()
                                                    .parentItemId(1L)
                                                    .childItemId(2L)
@@ -91,10 +91,10 @@ public class BomCommandServiceImpl_CreateBomTest {
 
         when(bomRepository.save(any(Bom.class))).thenReturn(savedBom);
 
-        // Act — 실제 메서드 실행
+        // Act
         BomDetailResponse response = bomCommandServiceImpl.createBom(request);
 
-        // Assert — 결과 검증
+        // Assert
         assertNotNull(response);
         assertEquals(100L, response.getBomId());
         assertEquals(1L, response.getParentItemId());

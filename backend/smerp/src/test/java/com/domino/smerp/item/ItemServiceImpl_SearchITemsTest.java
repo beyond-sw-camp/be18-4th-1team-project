@@ -34,11 +34,11 @@ public class ItemServiceImpl_SearchITemsTest {
     @InjectMocks
     private ItemServiceImpl itemService;
 
-    // ✅ 정상 조회 케이스 ---------------------------------------------
+    // 정상 조회 케이스
     @Test
     @DisplayName("검색 조건에 맞는 품목 목록을 정상적으로 반환한다")
     void searchItems_success() {
-        // 🧩 Arrange
+        // Arrange
         SearchItemRequest request = SearchItemRequest.builder()
                                                      .status("정상")
                                                      .name("볼트")
@@ -76,7 +76,7 @@ public class ItemServiceImpl_SearchITemsTest {
     @Test
     @DisplayName("검색 결과가 없으면 빈 페이지를 반환한다")
     void searchItems_empty() {
-        // 🧩 Arrange
+        // Arrange
         SearchItemRequest request = SearchItemRequest.builder()
                                                      .status("정상")
                                                      .name("없는품목")
@@ -87,10 +87,10 @@ public class ItemServiceImpl_SearchITemsTest {
         Page<Item> emptyPage = new PageImpl<>(Collections.emptyList());
         when(itemRepository.searchItems(request, pageable)).thenReturn(emptyPage);
 
-        // ⚙️ Act
+        // Act
         PageResponse<ItemListResponse> response = itemService.searchItems(request, pageable);
 
-        // ✅ Assert
+        // Assert
         assertNotNull(response);
         assertEquals(0, response.getTotalElements());
         assertTrue(response.getContent().isEmpty());
