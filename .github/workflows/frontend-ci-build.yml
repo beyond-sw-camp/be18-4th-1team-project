@@ -1,54 +1,54 @@
-name: Frontend CI (Vue)
+name: frontend-ci-build.yml
 
 on:
-  push:
-    branches:
-      - main
-      - develop
   pull_request:
     branches:
       - main
       - develop
+  push:
+    branches:
+      - develop
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
 
+    permissions:
+      write-all
+
     steps:
-      # 저장소 코드 체크아웃
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Node.js 환경 설정
-      - name: Setup Node.js
+      - name: Setup Node.js (v20)
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # Vue 의존성 설치
       - name: Install dependencies
+        working-directory: ./frontend/smerp-client
         run: npm ci
-        working-directory: ./frontend/smerp-client
 
-      # Vue 빌드 테스트
-      - name: Build frontend
+      - name: Build Vue application
+        working-directory: ./frontend/smerp-client
         run: npm run build
-        working-directory: ./frontend/smerp-client
 
-  docker:
-    runs-on: ubuntu-latest
-    needs: build
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-    steps:
-      - uses: actions/checkout@v4
+      # Docker 빌드 테스트 (push는 안 함)
+      - name: Build Docker image (frontend)
+        env:
+          FRONT_DOCKER_USERNAME: ${{ secrets.FRONT_DOCKER_USERNAME }}
+          FRONT_IMAGE_NAME: ${{ secrets.FRONT_IMAGE_NAME }}
+        run: |
+          docker build -f frontend/smerp-client/Dockerfile \
+            -t $FRONT_DOCKER_USERNAME/$FRONT_IMAGE_NAME:ci-test .
 
-      # Docker 이미지 빌드
-      - name: Build Docker image
-        run: docker build -t smerp-frontend ./frontend/smerp-client
-
-      # (선택) 컨테이너 실행 테스트
+      # 컨테이너가 실제로 잘 뜨는지 확인 (테스트용)
       - name: Run container test
         run: |
-          docker run -d -p 8080:80 smerp-frontend
+          docker run -d -p 8080:80 ${{ secrets.FRONT_DOCKER_USERNAME }}/${{ secrets.FRONT_IMAGE_NAME }}:ci-test
           sleep 5
-          curl -f http://localhost:8080 || exit 1
+          curl -f http://localhost:8080 || (docker logs $(docker ps -lq) && exit 1)
