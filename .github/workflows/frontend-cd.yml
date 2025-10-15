@@ -1,4 +1,26 @@
 name: frontend-cd.yml
+
 on:
+  workflow_dispatch:  # 🔹 수동 실행용 (Actions 탭에서 "Run workflow" 버튼으로 테스트 가능)
 
 jobs:
+  test-k8s:
+    name: Test CD - Check Kubernetes Access
+    runs-on: self-hosted  # 🔹 방금 등록한 러너에서 실행됨
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show runner info
+        run: |
+          echo " GitHub Runner is connected and running on:"
+          hostname
+          whoami
+
+      - name: Check kubectl version
+        run: kubectl version --client
+
+      - name: Test access to Kubernetes cluster
+        run: |
+          echo " Testing kubectl connectivity..."
+          kubectl get nodes
