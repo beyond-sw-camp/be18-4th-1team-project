@@ -1,27 +1,26 @@
-name: "Frontend CD"
+name: Frontend CD
 
 on:
   workflow_dispatch:
 
 jobs:
-  test-k8s:
-    name: "Test CD - Check Kubernetes Access"
+  deploy:
     runs-on: self-hosted
+    name: "Deploy to Local K8s"
 
     steps:
       - name: "Checkout code"
         uses: actions/checkout@v4
 
-      - name: "Show runner info"
+      - name: "Check kubectl context"
         run: |
-          echo "✅ GitHub Runner is connected and running on:"
-          hostname
-          whoami
-
-      - name: "Check kubectl version"
-        run: kubectl version --client
-
-      - name: "Test access to Kubernetes cluster"
-        run: |
-          echo "🔍 Testing kubectl connectivity..."
+          echo "🔍 Checking current context..."
+          kubectl config current-context
           kubectl get nodes
+
+      - name: "Apply Kubernetes manifests"
+        working-directory: ./frontend/k8s
+        run: |
+          echo "🚀 Deploying frontend to Docker Desktop K8s..."
+          kubectl apply -f .
+          kubectl get pods -A
