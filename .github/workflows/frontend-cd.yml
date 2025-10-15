@@ -1,4 +1,4 @@
-name: frontend-cd.yml
+name: frontend CD
 
 on:
   workflow_dispatch:  # 🔹 수동 실행용 (Actions 탭에서 "Run workflow" 버튼으로 테스트 가능)
