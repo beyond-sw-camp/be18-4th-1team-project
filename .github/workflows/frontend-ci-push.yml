@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - test/cd
 
 jobs:
   build:
@@ -50,5 +51,6 @@ jobs:
         run: |
           docker build \
             -f frontend/smerp-client/Dockerfile \
-            -t $FRONT_DOCKER_USERNAME/$FRONT_IMAGE_NAME:$IMAGE_TAG .
+            -t $FRONT_DOCKER_USERNAME/$FRONT_IMAGE_NAME:$IMAGE_TAG \
+            ./frontend/smerp-client
           docker push $FRONT_DOCKER_USERNAME/$FRONT_IMAGE_NAME:$IMAGE_TAG
