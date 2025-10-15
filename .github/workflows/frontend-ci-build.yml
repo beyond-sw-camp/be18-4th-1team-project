@@ -37,16 +37,17 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # Docker 빌드 테스트 (push는 안 함)
+      # Docker 이미지 빌드 (push 안 함)
       - name: Build Docker image (frontend)
         env:
           FRONT_DOCKER_USERNAME: ${{ secrets.FRONT_DOCKER_USERNAME }}
           FRONT_IMAGE_NAME: ${{ secrets.FRONT_IMAGE_NAME }}
         run: |
           docker build -f frontend/smerp-client/Dockerfile \
-            -t $FRONT_DOCKER_USERNAME/$FRONT_IMAGE_NAME:ci-test .
+            -t $FRONT_DOCKER_USERNAME/$FRONT_IMAGE_NAME:ci-test \
+            frontend/smerp-client
 
-      # 컨테이너가 실제로 잘 뜨는지 확인 (테스트용)
+      # 컨테이너 테스트 (빌드 검증)
       - name: Run container test
         run: |
           docker run -d -p 8080:80 ${{ secrets.FRONT_DOCKER_USERNAME }}/${{ secrets.FRONT_IMAGE_NAME }}:ci-test
