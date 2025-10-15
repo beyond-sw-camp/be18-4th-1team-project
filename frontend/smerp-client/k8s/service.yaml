@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: smerp-frontend-service
+spec:
+  type: NodePort
+  selector:
+    app: smerp-frontend
+  ports:
+    - name: http
+      port: 80                 # Service 내부 포트 (Pod의 containerPort와 동일)
+      targetPort: 80           # 실제 컨테이너 포트
+      nodePort: 30080          # 외부 노출 포트
