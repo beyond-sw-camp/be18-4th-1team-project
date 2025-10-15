@@ -19,7 +19,7 @@ jobs:
           kubectl get nodes
 
       - name: "Apply Kubernetes manifests"
-        working-directory: ./frontend/k8s
+        working-directory: ./frontend/smerp-client/k8s
         run: |
           echo "🚀 Deploying frontend to Docker Desktop K8s..."
           kubectl apply -f .
