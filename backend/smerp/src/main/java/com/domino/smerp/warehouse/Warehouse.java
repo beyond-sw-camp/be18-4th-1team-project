@@ -3,8 +3,8 @@ package com.domino.smerp.warehouse;
 import com.domino.smerp.common.BaseEntity;
 import com.domino.smerp.location.Location;
 import com.domino.smerp.warehouse.constants.DivisionType;
-import com.domino.smerp.warehouse.dto.request.WarehouseRequest;
-import jakarta.persistence.CascadeType;
+import com.domino.smerp.warehouse.dto.request.CreateWarehouseRequest;
+import com.domino.smerp.warehouse.dto.request.UpdateWarehouseRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -61,7 +61,7 @@ public class Warehouse extends BaseEntity {
   private List<Location> locations = new ArrayList<>();
 
   //Boolean - null, false, true
-  public void update(WarehouseRequest warehouseRequest) {
+  public void update(UpdateWarehouseRequest warehouseRequest) {
 
     if (warehouseRequest.getName() != null) {
       this.name = warehouseRequest.getName();
@@ -85,7 +85,7 @@ public class Warehouse extends BaseEntity {
 
   }
 
-  public static Warehouse create(WarehouseRequest warehouseRequest) {
+  public static Warehouse create(CreateWarehouseRequest warehouseRequest) {
 
     return Warehouse.builder()
         .name(warehouseRequest.getName())

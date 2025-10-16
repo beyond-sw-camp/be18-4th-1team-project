@@ -7,7 +7,6 @@
 
 # docker
 .dockerignore
-Dockerfile
 
 *.md
 *.sh
