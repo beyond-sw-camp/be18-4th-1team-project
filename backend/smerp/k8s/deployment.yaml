@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec: #deployment spec
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template: #pod template
+    metadata:
+      labels:
+        app: backend
+    spec: #pod spec
+      containers:
+        - name: backend-container
+          image: pcochoco/backend:2a42bf46fdca16f2156a2e2a78873fa5a1b484f1
+          imagePullPolicy: Always
+          env:
+
+            - name: SERVER_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret-local
+                  key: server_port
+
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret-local
+                  key: spring_datasource_url
+
+            - name: SPRING_DATASOURCE_DRIVER
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret-local
+                  key: spring_datasource_driver
+
+            # Secret에서 가져오는 값
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret-local
+                  key: spring_datasource_username
+
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret-local
+                  key: spring_datasource_password
+
+            - name: ENCRYPT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret-local
+                  key: encrypt_key
+
+            - name: ENCRYPT_SALT
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret-local
+                  key: encrypt_salt
+
+            #build.gradle 내용이므로 동일하게 달리 적용해줘야할지 아니면 구별 없어도 될지
+            - name: QUERYDSL_VERSION
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret-local
+                  key: querydsl_version
+
+
+      #            - name: MYSQL_PORT
+      #              valueFrom:
+      #                secretKeyRef:
+      #                  name: backend-secret-local
+      #                  key: mysql_port
+      #
+      #            - name: MYSQL_DATABASE
+      #              valueFrom:
+      #                configMapKeyRef:
+      #                  name: backend-secret-local
+      #                  key: mysql_database
+
+
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: regsecret

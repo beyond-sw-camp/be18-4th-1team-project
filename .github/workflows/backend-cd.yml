@@ -1,4 +1,44 @@
 name: backend-cd.yml
 on:
-
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/test-for-backend-cicd
 jobs:
+  deploy:
+    runs-on: self-hosted
+    name: "deploy to local k8s"
+
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v4
+
+      - name: "Checkout kubectl context"
+        run: |
+          echo "Checking current context"
+          kubectl config current-context
+          kubectl get nodes
+
+      - name: "Create k8s secret.yaml"
+        run: |
+          kubectl create secret generic cluster-secret \
+            --from-literal=spring_datasource_url=jdbc:mariadb://localhost:3306/${{ secrets.MYSQL_DATABASE }} \
+            --from-literal=db_user=${{ secrets.SPRING_DATASOURCE_USERNAME }} \
+            --from-literal=db_password=${{secrets.SPRING_DATASOURCE_PASSWORD}} \
+            --from-literal=spring_datasource_driver=${{secrets.SPRING_DATASOURCE_DRIVER}} \
+            --from-literal=server_port=${{secrets.SERVER_PORT}} \
+            --from-literal=encrypt_key=${{secrets.ENCRYPT_KEY}} \
+            --from-literal=encrypt_salt=${{secrets.ENCRYPT_SALT}} \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: "Apply k8s resources"
+        working-directory: ./backend/smerp/k8s
+        run: | 
+          echo "Deploying backend"
+          
+          kubectl apply -f deployment.yaml
+          kubectl apply -f secret.yaml
+          
+          echo "manifests applied"
+
+      
