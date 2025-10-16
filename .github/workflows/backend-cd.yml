@@ -30,7 +30,8 @@ jobs:
             --from-literal=encrypt_key=${{secrets.ENCRYPT_KEY}} \
             --from-literal=encrypt_salt=${{secrets.ENCRYPT_SALT}} \
             --dry-run=client -o yaml | kubectl apply -f -
-
+        shell: bash
+        
       - name: "Apply k8s resources"
         working-directory: ./backend/smerp/k8s
         run: | 
