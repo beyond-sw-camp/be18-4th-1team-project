@@ -1,14 +1,15 @@
 name: Frontend CD
 
 on:
-  pull_request:
+  workflow_dispatch:  # 수동 실행도 가능
+  push:
     branches:
-      - develop
-      - main
+      - main          # main push 시 자동 실행 (CI Push → CD 연결)
+
 jobs:
   deploy:
     runs-on: self-hosted
-    name: "Deploy to Local K8s"
+    name: "Deploy to Local Kubernetes"
 
     steps:
       - name: "Checkout code"
@@ -16,13 +17,27 @@ jobs:
 
       - name: "Check kubectl context"
         run: |
-          echo "🔍 Checking current context..."
+          echo "Checking current context..."
           kubectl config current-context
           kubectl get nodes
 
       - name: "Apply Kubernetes manifests"
         working-directory: ./frontend/smerp-client/k8s
         run: |
-          echo "🚀 Deploying frontend to Docker Desktop K8s..."
+          echo "Deploying frontend to Docker Desktop K8s..."
           kubectl apply -f .
-          kubectl get pods -A
+          echo "Manifests applied successfully."
+
+      - name: "Wait for rollout to complete"
+        run: |
+          DEPLOY_NAME=$(kubectl get deploy -n default -o jsonpath="{.items[0].metadata.name}")
+          echo "Waiting for rollout of deployment: $DEPLOY_NAME"
+          kubectl rollout status deployment/$DEPLOY_NAME --timeout=90s
+          echo "Deployment rollout successful!"
+
+      - name: "Check running pods and services"
+        run: |
+          echo "Pods status:"
+          kubectl get pods -o wide
+          echo "Services:"
+          kubectl get svc -o wide
