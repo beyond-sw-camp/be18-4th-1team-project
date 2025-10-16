@@ -33,15 +33,7 @@ jobs:
           ENCRYPT_SALT: ${{ secrets.ENCRYPT_SALT }}
 
         run: |
-          kubectl --% secret generic cluster-secret `
-            --from-literal=spring_datasource_url=$env:SPRING_DATASOURCE_URL `
-            --from-literal=db_user=$env:SPRING_DATASOURCE_USERNAME `
-            --from-literal=db_password=$env:SPRING_DATASOURCE_PASSWORD `
-            --from-literal=spring_datasource_driver=$env:SPRING_DATASOURCE_DRIVER `
-            --from-literal=server_port=$env:SERVER_PORT `
-            --from-literal=encrypt_key=$env:ENCRYPT_KEY `
-            --from-literal=encrypt_salt=$env:ENCRYPT_SALT `
-            --dry-run=client -o yaml | kubectl apply -f -
+          kubectl --% secret generic cluster-secret --from-literal=spring_datasource_url=$env:SPRING_DATASOURCE_URL --from-literal=db_user=$env:SPRING_DATASOURCE_USERNAME --from-literal=db_password=$env:SPRING_DATASOURCE_PASSWORD --from-literal=spring_datasource_driver=$env:SPRING_DATASOURCE_DRIVER --from-literal=server_port=$env:SERVER_PORT --from-literal=encrypt_key=$env:ENCRYPT_KEY --from-literal=encrypt_salt=$env:ENCRYPT_SALT --dry-run=client -o yaml | kubectl apply -f -
 
 
       - name: "Apply k8s resources"
@@ -55,3 +47,4 @@ jobs:
           echo "manifests applied"
           
           
+          #--from-literal=spring_datasource_url=jdbc:mariadb://localhost:3306/$env:MYSQL_DATABASE `
