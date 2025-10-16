@@ -21,7 +21,7 @@ jobs:
 
       - name: "Create k8s secret.yaml"
         run: |
-          kubectl create secret generic cluster-secret \
+          kubectl --% secret generic cluster-secret \
             --from-literal=spring_datasource_url=jdbc:mariadb://localhost:3306/${{ secrets.MYSQL_DATABASE }} \
             --from-literal=db_user=${{ secrets.SPRING_DATASOURCE_USERNAME }} \
             --from-literal=db_password=${{secrets.SPRING_DATASOURCE_PASSWORD}} \
@@ -30,7 +30,6 @@ jobs:
             --from-literal=encrypt_key=${{secrets.ENCRYPT_KEY}} \
             --from-literal=encrypt_salt=${{secrets.ENCRYPT_SALT}} \
             --dry-run=client -o yaml | kubectl apply -f -
-        shell: bash
         
       - name: "Apply k8s resources"
         working-directory: ./backend/smerp/k8s
