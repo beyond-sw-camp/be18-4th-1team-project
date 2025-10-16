@@ -26,7 +26,7 @@ jobs:
           echo "Applying Service first..."
           kubectl apply -f service.yaml
           echo "Applying Deployment..."
-          kubectl apply -f deploy.yaml
+          kubectl apply -f deployment.yaml
           echo "Frontend deployment completed."
 
       - name: "Wait for rollout to complete"
