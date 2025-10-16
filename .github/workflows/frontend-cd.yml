@@ -21,7 +21,7 @@ jobs:
           kubectl get nodes
 
       - name: Apply Kubernetes manifests
-        shell: pwsh
+        shell: powershell
         working-directory: ./frontend/smerp-client/k8s
         run: |
           kubectl apply -f service.yaml
