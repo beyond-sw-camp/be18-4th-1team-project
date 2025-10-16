@@ -20,8 +20,7 @@ jobs:
           kubectl get nodes
 
       - name: "Create k8s secret.yaml"
-        shell: powershell
-
+        
         env:
           MYSQL_DATABASE: ${{ secrets.DATABASE }}
           SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
