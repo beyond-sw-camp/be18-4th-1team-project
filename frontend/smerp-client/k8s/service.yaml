@@ -11,4 +11,4 @@ spec:
     - name: http
       port: 80                 # Service 내부 포트 (Pod의 containerPort와 동일)
       targetPort: 80           # 실제 컨테이너 포트
-      nodePort: 30080          # 외부 노출 포트
+      nodePort: 30090          # 외부 노출 포트
