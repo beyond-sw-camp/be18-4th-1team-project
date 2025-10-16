@@ -2,7 +2,7 @@ name: backend-ci-push.yml
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   build:
