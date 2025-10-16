@@ -31,13 +31,8 @@ jobs:
         shell: powershell
         run: |
           $IMAGE_TAG = $env:GITHUB_SHA
-          $DOCKER_USER = $env:FRONT_DOCKER_USERNAME
-          $IMAGE_NAME = $env:FRONT_IMAGE_NAME
-          
-          if (-not $DOCKER_USER -or -not $IMAGE_NAME) {
-            Write-Error "Docker image info missing! Check secrets FRONT_DOCKER_USERNAME and FRONT_IMAGE_NAME."
-            exit 1
-          }
+          $DOCKER_USER = "promandu"
+          $IMAGE_NAME = "smerp-frontend"
           
           $FULL_IMAGE = "$DOCKER_USER/$IMAGE_NAME" + ":" + "$IMAGE_TAG"
           Write-Host "Deploying image: $FULL_IMAGE"
