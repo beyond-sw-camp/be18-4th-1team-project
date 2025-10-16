@@ -15,20 +15,20 @@ jobs:
     env:
       DOCKER_USER: ${{ secrets.FRONT_DOCKER_USERNAME }}
       IMAGE_NAME: ${{ secrets.FRONT_IMAGE_NAME }}
+      NAMESPACE: "smerp"
 
     steps:
-
       - name: Create namespace if not exists
         shell: powershell
         run: |
-          $ns = "smerp"
+          $ns = $env:NAMESPACE
           Write-Host "Checking if namespace '$ns' exists..."
-          $exists = kubectl get namespace $ns -o json 2>$null
-          if (-not $?) {
+          try {
+            kubectl get namespace $ns -o json | Out-Null
+            Write-Host "Namespace '$ns' already exists."
+          } catch {
             Write-Host "Namespace '$ns' not found. Creating..."
             kubectl create namespace $ns
-          } else {
-            Write-Host "Namespace '$ns' already exists."
           }
 
       - name: Checkout code
@@ -44,29 +44,28 @@ jobs:
         shell: powershell
         working-directory: ./frontend/smerp-client/k8s
         run: |
-          kubectl apply -f service.yaml
-          kubectl apply -f deployment.yaml
+          kubectl apply -f service.yaml -n $env:NAMESPACE
+          kubectl apply -f deployment.yaml -n $env:NAMESPACE
 
       - name: Update Deployment with new image
         shell: powershell
         run: |
           $IMAGE_TAG = $env:GITHUB_SHA
-          $DOCKER_USER = $env:DOCKER_USER
-          $IMAGE_NAME = $env:IMAGE_NAME
-          
-          $FULL_IMAGE = "$DOCKER_USER/$IMAGE_NAME" + ":" + "$IMAGE_TAG"
+          $FULL_IMAGE = "$env:DOCKER_USER/$env:IMAGE_NAME" + ":" + "$IMAGE_TAG"
+
           Write-Host "Deploying image: $FULL_IMAGE"
           
           kubectl set image deployment/smerp-frontend `
-            smerp-frontend=$FULL_IMAGE
+            smerp-frontend=$FULL_IMAGE -n $env:NAMESPACE
 
       - name: Wait for rollout to complete
         shell: powershell
         run: |
-          kubectl rollout status deployment/smerp-frontend --timeout=90s
+          kubectl rollout status deployment/smerp-frontend `
+            -n $env:NAMESPACE --timeout=90s
 
       - name: Check running pods and services
         shell: powershell
         run: |
-          kubectl get pods -o wide
-          kubectl get svc -o wide
+          kubectl get pods -n $env:NAMESPACE -o wide
+          kubectl get svc -n $env:NAMESPACE -o wide
