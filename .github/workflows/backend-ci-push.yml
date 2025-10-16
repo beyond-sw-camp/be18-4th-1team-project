@@ -3,7 +3,7 @@ name: backend-ci-push.yml
 on:
   push:
     branches:
-      - feature/test-for-backend-cicd
+      - feature/30-backend-cd
 
 jobs:
   build:
