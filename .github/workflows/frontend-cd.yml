@@ -12,6 +12,10 @@ jobs:
     runs-on: [self-hosted, Windows, X64]
     name: "Deploy to Local Kubernetes"
 
+    env:
+      DOCKER_USER: ${{ secrets.FRONT_DOCKER_USERNAME }}
+      IMAGE_NAME: ${{ secrets.FRONT_IMAGE_NAME }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -33,15 +37,14 @@ jobs:
         shell: powershell
         run: |
           $IMAGE_TAG = $env:GITHUB_SHA
-          $DOCKER_USER = "promandu"
-          $IMAGE_NAME = "smerp-frontend"
+          $DOCKER_USER = $env:DOCKER_USER
+          $IMAGE_NAME = $env:IMAGE_NAME
           
           $FULL_IMAGE = "$DOCKER_USER/$IMAGE_NAME" + ":" + "$IMAGE_TAG"
           Write-Host "Deploying image: $FULL_IMAGE"
           
           kubectl set image deployment/smerp-frontend `
             smerp-frontend=$FULL_IMAGE
-
 
       - name: Wait for rollout to complete
         shell: powershell
