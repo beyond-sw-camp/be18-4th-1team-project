@@ -15,7 +15,7 @@ spec: #deployment spec
     spec: #pod spec
       containers:
         - name: backend-container
-          image: pcochoco/backend:latest
+          image: ghcr.io/pcochoco/backend:latest
           imagePullPolicy: Always
           env:
 
