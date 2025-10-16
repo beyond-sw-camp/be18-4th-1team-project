@@ -14,7 +14,7 @@ spec: #deployment spec
     spec: #pod spec
       containers:
         - name: backend-container
-          image: pcochoco/backend:2a42bf46fdca16f2156a2e2a78873fa5a1b484f1
+          image: pcochoco/backend:c50a5a2b7d54a09911401bbeb02c47442e58a11c
           imagePullPolicy: Always
           env:
 
