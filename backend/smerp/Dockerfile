@@ -24,8 +24,6 @@ WORKDIR /app
 
 RUN apk add --no-cache curl
 
-FROM summerwind/actions-runner:latest
-
 RUN sudo curl -LO https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl && \
     sudo chmod +x ./kubectl && \
     sudo mv ./kubectl /usr/local/bin/kubectl
