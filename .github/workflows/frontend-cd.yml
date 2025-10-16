@@ -1,7 +1,6 @@
 name: Frontend CD
 
 on:
-  workflow_dispatch:  # 수동 실행도 가능
   push:
     branches:
       - main          # main push 시 자동 실행 (CI Push → CD 연결)
@@ -24,9 +23,11 @@ jobs:
       - name: "Apply Kubernetes manifests"
         working-directory: ./frontend/smerp-client/k8s
         run: |
-          echo "Deploying frontend to Docker Desktop K8s..."
-          kubectl apply -f .
-          echo "Manifests applied successfully."
+          echo "Applying Service first..."
+          kubectl apply -f service.yaml
+          echo "Applying Deployment..."
+          kubectl apply -f deploy.yaml
+          echo "Frontend deployment completed."
 
       - name: "Wait for rollout to complete"
         run: |
