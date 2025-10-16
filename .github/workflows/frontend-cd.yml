@@ -23,13 +23,19 @@ jobs:
         run: |
           $ns = $env:NAMESPACE
           Write-Host "Checking if namespace '$ns' exists..."
-          try {
-            kubectl get namespace $ns -o json | Out-Null
-            Write-Host "Namespace '$ns' already exists."
-          } catch {
+
+          $ErrorActionPreference = "SilentlyContinue"
+          $exists = kubectl get namespace $ns -o json
+
+          if ($LASTEXITCODE -ne 0) {
             Write-Host "Namespace '$ns' not found. Creating..."
             kubectl create namespace $ns
+          } else {
+            Write-Host "Namespace '$ns' already exists."
           }
+
+          # 다시 오류 감지 모드 복원
+          $ErrorActionPreference = "Stop"
 
       - name: Checkout code
         uses: actions/checkout@v4
