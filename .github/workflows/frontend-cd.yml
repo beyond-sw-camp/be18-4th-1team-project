@@ -1,44 +1,77 @@
-name: Frontend CD
+
+name: frontend-cd.yml
 
 on:
-  push:
+  pull_request:
     branches:
-      - main          # main push 시 자동 실행 (CI Push → CD 연결)
+      - develop
+      - main
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: [self-hosted, Windows, X64]
     name: "Deploy to Local Kubernetes"
 
+    env:
+      DOCKER_USER: ${{ secrets.FRONT_DOCKER_USERNAME }}
+      IMAGE_NAME: ${{ secrets.FRONT_IMAGE_NAME }}
+      NAMESPACE: "smerp"
+
     steps:
-      - name: "Checkout code"
+      - name: Create namespace if not exists
+        shell: powershell
+        run: |
+          $ns = $env:NAMESPACE
+          Write-Host "Checking if namespace '$ns' exists..."
+
+          $ErrorActionPreference = "SilentlyContinue"
+          $exists = kubectl get namespace $ns -o json
+
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "Namespace '$ns' not found. Creating..."
+            kubectl create namespace $ns
+          } else {
+            Write-Host "Namespace '$ns' already exists."
+          }
+
+          # 다시 오류 감지 모드 복원
+          $ErrorActionPreference = "Stop"
+
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: "Check kubectl context"
+      - name: Check kubectl context
+        shell: powershell
         run: |
-          echo "Checking current context..."
           kubectl config current-context
           kubectl get nodes
 
-      - name: "Apply Kubernetes manifests"
+      - name: Apply Kubernetes manifests
+        shell: powershell
         working-directory: ./frontend/smerp-client/k8s
         run: |
-          echo "Applying Service first..."
-          kubectl apply -f service.yaml
-          echo "Applying Deployment..."
-          kubectl apply -f deployment.yaml
-          echo "Frontend deployment completed."
+          kubectl apply -f service.yaml -n $env:NAMESPACE
+          kubectl apply -f deployment.yaml -n $env:NAMESPACE
 
-      - name: "Wait for rollout to complete"
+      - name: Update Deployment with new image
+        shell: powershell
         run: |
-          DEPLOY_NAME=$(kubectl get deploy -n default -o jsonpath="{.items[0].metadata.name}")
-          echo "Waiting for rollout of deployment: $DEPLOY_NAME"
-          kubectl rollout status deployment/$DEPLOY_NAME --timeout=90s
-          echo "Deployment rollout successful!"
+          $IMAGE_TAG = $env:GITHUB_SHA
+          $FULL_IMAGE = "$env:DOCKER_USER/$env:IMAGE_NAME" + ":" + "$IMAGE_TAG"
 
-      - name: "Check running pods and services"
+          Write-Host "Deploying image: $FULL_IMAGE"
+          
+          kubectl set image deployment/smerp-frontend `
+            smerp-frontend=$FULL_IMAGE -n $env:NAMESPACE
+
+      - name: Wait for rollout to complete
+        shell: powershell
         run: |
-          echo "Pods status:"
-          kubectl get pods -o wide
-          echo "Services:"
-          kubectl get svc -o wide
+          kubectl rollout status deployment/smerp-frontend `
+            -n $env:NAMESPACE --timeout=90s
+
+      - name: Check running pods and services
+        shell: powershell
+        run: |
+          kubectl get pods -n $env:NAMESPACE -o wide
+          kubectl get svc -n $env:NAMESPACE -o wide
