@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - feature/test-for-backend-cicd
+      - feature/30-backend-cd
 jobs:
   deploy:
     runs-on: self-hosted
@@ -37,7 +37,7 @@ jobs:
           echo "Deploying backend"
           
           kubectl apply -f deployment.yaml
-          kubectl apply -f secret.yaml
+          kubectl apply -f service.yaml
           
           echo "manifests applied"
 
