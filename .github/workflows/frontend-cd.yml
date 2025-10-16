@@ -29,16 +29,16 @@ jobs:
           kubectl apply -f deployment.yaml
           echo "Frontend deployment completed."
 
-#      - name: "Wait for rollout to complete"
-#        run: |
-#          DEPLOY_NAME=$(kubectl get deploy -n default -o jsonpath="{.items[0].metadata.name}")
-#          echo "Waiting for rollout of deployment: $DEPLOY_NAME"
-#          kubectl rollout status deployment/$DEPLOY_NAME --timeout=90s
-#          echo "Deployment rollout successful!"
-#
-#      - name: "Check running pods and services"
-#        run: |
-#          echo "Pods status:"
-#          kubectl get pods -o wide
-#          echo "Services:"
-#          kubectl get svc -o wide
+      - name: "Wait for rollout to complete"
+        run: |
+          DEPLOY_NAME=$(kubectl get deploy -n default -o jsonpath="{.items[0].metadata.name}")
+          echo "Waiting for rollout of deployment: $DEPLOY_NAME"
+          kubectl rollout status deployment/$DEPLOY_NAME --timeout=90s
+          echo "Deployment rollout successful!"
+
+      - name: "Check running pods and services"
+        run: |
+          echo "Pods status:"
+          kubectl get pods -o wide
+          echo "Services:"
+          kubectl get svc -o wide
