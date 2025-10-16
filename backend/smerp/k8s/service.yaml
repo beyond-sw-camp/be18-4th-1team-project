@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  #deployment service와 맞춤
-  name: backend #service name(내부 dns 이름, 접근 식별자)
+  name: backend
+  namespace: test
 spec:
   ports:
-    - name: "http" #포트 이름
-      port: 80 #api gateway에서 지정
-      targetPort: 8080 #파드 내부 컨테이너가 사용중인 포드
+    - name: "http"
+      port: 80
+      targetPort: 8080
   selector:
     app: backend
