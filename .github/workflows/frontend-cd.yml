@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Check kubectl context
-        shell: pwsh
+        shell: powershell
         run: |
           kubectl config current-context
           kubectl get nodes
@@ -30,21 +30,29 @@ jobs:
       - name: Update Deployment with new image
         shell: powershell
         run: |
-          $IMAGE_TAG = "${{ github.sha }}"
-          $DOCKER_USER = "${{ secrets.FRONT_DOCKER_USERNAME }}"
-          $IMAGE_NAME = "${{ secrets.FRONT_IMAGE_NAME }}"
+          $IMAGE_TAG = $env:GITHUB_SHA
+          $DOCKER_USER = $env:FRONT_DOCKER_USERNAME
+          $IMAGE_NAME = $env:FRONT_IMAGE_NAME
+          
+          if (-not $DOCKER_USER -or -not $IMAGE_NAME) {
+            Write-Error "Docker image info missing! Check secrets FRONT_DOCKER_USERNAME and FRONT_IMAGE_NAME."
+            exit 1
+          }
+          
           $FULL_IMAGE = "$DOCKER_USER/$IMAGE_NAME" + ":" + "$IMAGE_TAG"
           Write-Host "Deploying image: $FULL_IMAGE"
+          
           kubectl set image deployment/smerp-frontend `
             smerp-frontend=$FULL_IMAGE
 
+
       - name: Wait for rollout to complete
-        shell: pwsh
+        shell: powershell
         run: |
           kubectl rollout status deployment/smerp-frontend --timeout=90s
 
       - name: Check running pods and services
-        shell: pwsh
+        shell: powershell
         run: |
           kubectl get pods -o wide
           kubectl get svc -o wide
