@@ -1,9 +1,9 @@
-name: Frontend CD
+name: front-cd.yml
 
 on:
   pull_request:
     branches:
-      - develop
+      - '**'
 
 jobs:
   deploy:
