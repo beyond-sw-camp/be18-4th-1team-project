@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smerp-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smerp-frontend
+  template:
+    metadata:
+      labels:
+        app: smerp-frontend
+    spec:
+      containers:
+        - name: smerp-frontend
+          image: smerp-frontend:latest   # 로컬에서 만든 이미지 사용
+          imagePullPolicy: Never         # (로컬 클러스터라면 필수)
+          ports:
+            - containerPort: 80
