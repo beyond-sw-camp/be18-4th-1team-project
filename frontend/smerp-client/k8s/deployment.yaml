@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: smerp-frontend
-          image: smerp-frontend:latest   # 로컬에서 만든 이미지 사용
-          imagePullPolicy: Never         # (로컬 클러스터라면 필수)
+          image: smerp-frontend:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
