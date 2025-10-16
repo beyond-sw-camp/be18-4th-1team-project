@@ -1,5 +1,5 @@
 
-name: Frontend CD
+name: frontend-cd.yml
 
 on:
   pull_request:

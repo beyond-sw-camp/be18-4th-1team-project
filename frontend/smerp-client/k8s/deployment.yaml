@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: smerp-frontend
+  namespace: smerp  # 여기에 추가
 spec:
   replicas: 1
   selector:
