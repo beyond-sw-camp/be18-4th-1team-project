@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: smerp-frontend
-          image: smerp-frontend:latest
+          image: promandu/smerp-frontend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 80
