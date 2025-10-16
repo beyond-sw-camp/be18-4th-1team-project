@@ -28,7 +28,7 @@ jobs:
           kubectl apply -f deployment.yaml
 
       - name: Update Deployment with new image
-        shell: pwsh
+        shell: powershell
         run: |
           $IMAGE_TAG = "${{ github.sha }}"
           Write-Host "Deploying image tag: $IMAGE_TAG"
