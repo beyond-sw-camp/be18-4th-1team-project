@@ -20,7 +20,7 @@ jobs:
           kubectl get nodes
 
       - name: "Create k8s secret.yaml"
-        shell: pwsh
+        shell: powershell
         run: |
           kubectl --% secret generic cluster-secret `
             --from-literal=spring_datasource_url=jdbc:mariadb://localhost:3306/$env:MYSQL_DATABASE `
