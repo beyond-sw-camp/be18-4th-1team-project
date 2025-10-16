@@ -17,6 +17,20 @@ jobs:
       IMAGE_NAME: ${{ secrets.FRONT_IMAGE_NAME }}
 
     steps:
+
+      - name: Create namespace if not exists
+        shell: powershell
+        run: |
+          $ns = "smerp"
+          Write-Host "Checking if namespace '$ns' exists..."
+          $exists = kubectl get namespace $ns -o json 2>$null
+          if (-not $?) {
+            Write-Host "Namespace '$ns' not found. Creating..."
+            kubectl create namespace $ns
+          } else {
+            Write-Host "Namespace '$ns' already exists."
+          }
+
       - name: Checkout code
         uses: actions/checkout@v4
 
