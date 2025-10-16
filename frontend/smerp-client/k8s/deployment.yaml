@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: smerp-frontend
+  namespace: smerp  # 여기에 추가
 spec:
   replicas: 1
   selector:
@@ -14,7 +15,7 @@ spec:
     spec:
       containers:
         - name: smerp-frontend
-          image: smerp-frontend:latest   # 로컬에서 만든 이미지 사용
-          imagePullPolicy: Never         # (로컬 클러스터라면 필수)
+          image: promandu/smerp-frontend:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80

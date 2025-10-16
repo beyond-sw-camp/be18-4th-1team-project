@@ -1,8 +1,9 @@
 name: frontend-ci-push.yml
 
 on:
-  push:
+  pull_request:
     branches:
+      - develop
       - main
 
 jobs:
