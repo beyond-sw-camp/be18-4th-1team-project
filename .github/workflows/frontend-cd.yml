@@ -1,11 +1,5 @@
 name: Frontend CD
 
-# on:
-#   push:
-#     branches:
-#       - main
-
-# 테스트용
 on:
   pull_request:
     branches:
@@ -40,8 +34,10 @@ jobs:
           Write-Host "Deploying image tag: $IMAGE_TAG"
           $DOCKER_USER = "${{ secrets.FRONT_DOCKER_USERNAME }}"
           $IMAGE_NAME = "${{ secrets.FRONT_IMAGE_NAME }}"
+          $FULL_IMAGE = "$DOCKER_USER/$IMAGE_NAME:${IMAGE_TAG}"
+          Write-Host "Setting image to: $FULL_IMAGE"
           kubectl set image deployment/smerp-frontend `
-            smerp-frontend="$DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG"
+            smerp-frontend=$FULL_IMAGE
 
       - name: Wait for rollout to complete
         shell: pwsh
