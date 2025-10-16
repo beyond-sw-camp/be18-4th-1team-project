@@ -23,7 +23,7 @@ jobs:
         shell: powershell
         run: |
           kubectl --% secret generic cluster-secret `
-            --from-literal=spring_datasource_url=jdbc:mariadb://localhost:3306/$env:MYSQL_DATABASE `
+            --from-literal=spring_datasource_url=$env: SPRING_DATASOURCE_URL `
             --from-literal=db_user=$env:SPRING_DATASOURCE_USERNAME `
             --from-literal=db_password=$env:SPRING_DATASOURCE_PASSWORD `
             --from-literal=spring_datasource_driver=$env:SPRING_DATASOURCE_DRIVER `
@@ -33,6 +33,7 @@ jobs:
             --dry-run=client -o yaml | kubectl apply -f -
 
         env:
+          SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
           MYSQL_DATABASE: ${{ secrets.DATABASE }}
           SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
@@ -40,6 +41,9 @@ jobs:
           SERVER_PORT: ${{ secrets.SERVER_PORT }}
           ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
           ENCRYPT_SALT: ${{ secrets.ENCRYPT_SALT }}
+
+          #  --from-literal=spring_datasource_url=jdbc:mariadb://localhost:3306/$env:MYSQL_DATABASE `
+
 
       - name: "Apply k8s resources"
         working-directory: ./backend/smerp/k8s
