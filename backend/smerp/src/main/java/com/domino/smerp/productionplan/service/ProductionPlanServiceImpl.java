@@ -1,27 +1,27 @@
 package com.domino.smerp.productionplan.service;
 
 import com.domino.smerp.common.dto.PageResponse;
+import com.domino.smerp.common.exception.CustomException;
+import com.domino.smerp.common.exception.ErrorCode;
 import com.domino.smerp.common.util.DocumentNoGenerator;
-import com.domino.smerp.item.repository.ItemRepository;
 import com.domino.smerp.productionplan.ProductionPlan;
-import com.domino.smerp.productionplan.dto.request.SearchProductionPlanRequest;
-import com.domino.smerp.productionplan.dto.response.SearchProductionPlanListResponse;
-import com.domino.smerp.productionplan.repository.ProductionPlanRepository;
 import com.domino.smerp.productionplan.constants.Status;
 import com.domino.smerp.productionplan.dto.request.CreateProductionPlanRequest;
+import com.domino.smerp.productionplan.dto.request.SearchProductionPlanRequest;
 import com.domino.smerp.productionplan.dto.request.UpdateProductionPlanRequest;
 import com.domino.smerp.productionplan.dto.response.ProductionPlanListResponse;
 import com.domino.smerp.productionplan.dto.response.ProductionPlanResponse;
+import com.domino.smerp.productionplan.dto.response.SearchProductionPlanListResponse;
+import com.domino.smerp.productionplan.repository.ProductionPlanRepository;
 import com.domino.smerp.user.User;
 import com.domino.smerp.user.UserRepository;
-import com.domino.smerp.warehouse.repository.WarehouseRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,14 +33,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductionPlanServiceImpl implements ProductionPlanService {
 
   private final ProductionPlanRepository productionPlanRepository;
-  private final ItemRepository itemRepository;
   private final UserRepository userRepository;
+  private final DocumentNoGenerator documentNoGenerator;
   //private final StockRepository stockRepository;
-  private final WarehouseRepository warehouseRepository;
+  //private final WarehouseRepository warehouseRepository;
   //private final WorkOrderService workOrderService;
   //private final StockService stockService;
-  private final ApplicationEventPublisher eventPublisher;
-  private final DocumentNoGenerator documentNoGenerator;
+  //private final ApplicationEventPublisher eventPublisher;
+  //private final ItemRepository itemRepository;
+
 
   @Override
   @Transactional(readOnly = true)
@@ -64,12 +65,10 @@ public class ProductionPlanServiceImpl implements ProductionPlanService {
 
     //id 에 대해 없는 경우 예외 (soft delete 고려)
     ProductionPlan productionPlan = productionPlanRepository.findByIdAndIsDeletedFalse(id)
-        .orElseThrow(() -> new EntityNotFoundException("No production plan of id"));
+        .orElseThrow(() -> new CustomException(ErrorCode.PRODUCTION_PLAN_NOT_FOUND));
 
     return toProductionPlanResponse(productionPlan);
   }
-
-  // ProductionPlanServiceImpl.java
 
   @Override
   @Transactional(readOnly = true)
@@ -101,8 +100,11 @@ public class ProductionPlanServiceImpl implements ProductionPlanService {
 
     //title 유일(soft delete 된 것 포함)
     if (productionPlanRepository.existsByTitle(createProductionPlanRequest.getTitle())) {
-      throw new IllegalArgumentException("Production Plan title duplicated");
+      throw new CustomException(ErrorCode.PRODUCTION_PLAN_DUPLICATE_TITLE);
     }
+
+    if(createProductionPlanRequest.getQty().compareTo(BigDecimal.ZERO) < 0)
+      throw new CustomException(ErrorCode.QTY_UNDER_ZERO);
 
     User user = userRepository.findByName(createProductionPlanRequest.getName())
         .orElse(null);
@@ -115,7 +117,6 @@ public class ProductionPlanServiceImpl implements ProductionPlanService {
         .title(createProductionPlanRequest.getTitle())
         .isDeleted(false)
         .documentNo(documentNo)
-        //.itemOrder(null)
         .qty(createProductionPlanRequest.getQty())
         .user(user)
         .build();
@@ -250,14 +251,17 @@ public class ProductionPlanServiceImpl implements ProductionPlanService {
 
     //isDeleted false인 경우 - true인 경우 삭제에 대한 취소 불가
     if (productionPlan.isDeleted()) {
-      throw new IllegalArgumentException("Production Plan is deleted");
+      throw new CustomException(ErrorCode.PRODUCTION_PLAN_DELETED);
     }
 
     //title 유일 - soft delete의 복원가능성 있어서 배제 x
     if (productionPlanRepository.existsByTitle(updateProductionPlanRequest.getTitle())
         && !updateProductionPlanRequest.getTitle().equals(productionPlan.getTitle())) {
-      throw new IllegalArgumentException("Production Plan title duplicated");
+      throw new CustomException(ErrorCode.PRODUCTION_PLAN_DUPLICATE_TITLE);
     }
+
+    if((updateProductionPlanRequest.getQty() != null) && (updateProductionPlanRequest.getQty().compareTo(BigDecimal.ZERO)) < 0)
+      throw new CustomException(ErrorCode.QTY_UNDER_ZERO);
 
     User user = updateProductionPlanRequest.getName() != null?
     userRepository.findByName(updateProductionPlanRequest.getName())
@@ -286,7 +290,7 @@ public class ProductionPlanServiceImpl implements ProductionPlanService {
 
     //id 없는 경우 예외
     ProductionPlan productionPlan = productionPlanRepository.findById(id)
-        .orElseThrow(() -> new EntityNotFoundException("No production plan by id"));
+        .orElseThrow(() -> new CustomException(ErrorCode.PRODUCTION_PLAN_NOT_FOUND));
     productionPlan.setIsDeleted(true);
 
     //시간 설정해서 7일 후 삭제 (updated 날짜 기준)
@@ -296,10 +300,9 @@ public class ProductionPlanServiceImpl implements ProductionPlanService {
 
   public void hardDeleteProductionPlan(final Long id){
     ProductionPlan productionPlan = productionPlanRepository.findById(id)
-        .orElseThrow(() -> new EntityNotFoundException("No production plan by id"));
-
+        .orElseThrow(() -> new CustomException(ErrorCode.PRODUCTION_PLAN_NOT_FOUND));
     if(!productionPlan.isDeleted())
-      throw new IllegalArgumentException("production plan is not softly deleted");
+      throw new CustomException(ErrorCode.PRODUCTION_PLAN_NOT_DELETED);
 
     //실제 삭제
     productionPlanRepository.delete(productionPlan);
@@ -317,7 +320,6 @@ public class ProductionPlanServiceImpl implements ProductionPlanService {
         .remark(productionPlan.getRemark())
         .title(productionPlan.getTitle())
         .documentNo(productionPlan.getDocumentNo())
-        .isDeleted(productionPlan.isDeleted()) //getIsDeleted x
         .build();
   }
 }
