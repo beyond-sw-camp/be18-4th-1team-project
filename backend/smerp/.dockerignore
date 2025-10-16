@@ -1,0 +1,14 @@
+# IntelliJ
+.idea
+
+# git
+.git
+.gitignore
+
+# docker
+.dockerignore
+
+*.md
+*.sh
+*.yml
+scripts

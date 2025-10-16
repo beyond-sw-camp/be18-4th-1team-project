@@ -52,7 +52,7 @@ public class ProductionPlan extends BaseEntity {
   @Builder.Default
   private boolean isDeleted = false;
 
-  @Column(name = "document_no")
+  @Column(name = "document_no", nullable = false)
   private String documentNo;
 
   @Column(precision = 12, scale = 3)

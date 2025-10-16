@@ -64,8 +64,6 @@ public enum ErrorCode {
     // stock
     STOCK_NOT_FOUND(HttpStatus.NOT_FOUND, "STOCK_NOT_FOUND", "품목에 대한 재고가 없습니다."),
     STOCK_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "STOCK_NOT_ENOUGH", "빼낼 재고 수량이 충분하지 않습니다."),
-    NO_WAREHOUSE_EMPTY(HttpStatus.BAD_REQUEST, "NO_WAREHOUSE_EMPTY", "재고를 넣을 창고 공간이 없습니다."),
-    LOCATION_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "LOCATION_NOT_ENOUGH", "재고를 넣을 창고 공간이 부족합니다."),
     ITEM_ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, "ITEM_ORDER_NOT_FOUND", "주문 품목 이 없습니다."),
 
     // order - 주문과 관련된 예외 정보
@@ -115,9 +113,22 @@ public enum ErrorCode {
     PURCHASE_ORDER_ALREADY_COMPLETED(HttpStatus.BAD_REQUEST, "PURCHASE_ORDER_ALREADY_COMPLETED", "완료된 구매 전표는 수정하거나 삭제할 수 없습니다."),
     INVALID_REQUEST_ORDER_STATUS_FOR_PURCHASE(HttpStatus.BAD_REQUEST, "INVALID_REQUEST_ORDER_STATUS_FOR_PURCHASE", "해당 발주는 구매 생성이 불가능한 상태입니다."),
 
+    // ProductionPlan
+    PRODUCTION_PLAN_DUPLICATE_TITLE(HttpStatus.CONFLICT, "PROCUTION_PLAN_DUPLICATE_TITLE", "생산 계획 제목 중복입니다."),
+    PRODUCTION_PLAN_NOT_FOUND(HttpStatus.NOT_FOUND, "PRODUCTION_PLAN_NOT_FOUND", "존재하지 않는 계획입니다."),
+    PRODUCTION_PLAN_DELETED(HttpStatus.NOT_FOUND, "PRODUCTION_PLAN_DELETED", "계획이 이미 (SOFTLY)삭제되었습니다."),
+    PRODUCTION_PLAN_NOT_DELETED(HttpStatus.NOT_FOUND, "PRODUCTION_PLAN_NOT_DELETED", "계획이 (SOFTLY) 삭제되지 않았습니다."),
+    QTY_UNDER_ZERO(HttpStatus.BAD_REQUEST, "QTY_UNDER_ZERO", "수량은 음수 불가합니다."),
 
     // 전표 생성 예외 정보
-    DOCUMENT_NO_GENERATION_FAILED(HttpStatus.CONFLICT, "DOCUMENT_NO_GENERATION_FAILED", "전표번호 생성에 실패했습니다.");
+    DOCUMENT_NO_GENERATION_FAILED(HttpStatus.CONFLICT, "DOCUMENT_NO_GENERATION_FAILED", "전표번호 생성에 실패했습니다."),
+
+    //WAREHOUSE
+    WAREHOUSE_NOT_FOUND(HttpStatus.NOT_FOUND, "WAREHOUSE_NOT_FOUND", "없는 창고입니다."),
+    WAREHOUSE_DUPLICATE_NAME(HttpStatus.CONFLICT, "WAREHOUSE_DUPLICATE_NAME", "창고 이름 중복됩니다."),
+    NO_WAREHOUSE_EMPTY(HttpStatus.BAD_REQUEST, "NO_WAREHOUSE_EMPTY", "재고를 넣을 창고 공간이 없습니다."),
+    LOCATION_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "LOCATION_NOT_ENOUGH", "재고를 넣을 창고 공간이 부족합니다.");
+
 
     private final HttpStatus status;
     private final String code;
