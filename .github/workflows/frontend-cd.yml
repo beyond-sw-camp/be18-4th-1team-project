@@ -32,11 +32,13 @@ jobs:
           kubectl apply -f deployment.yaml
 
       - name: Update Deployment with new image
+        shell: bash
         run: |
           IMAGE_TAG=${{ github.sha }}
           echo "Deploying image tag: $IMAGE_TAG"
           kubectl set image deployment/smerp-frontend \
             smerp-frontend=${{ secrets.FRONT_DOCKER_USERNAME }}/${{ secrets.FRONT_IMAGE_NAME }}:$IMAGE_TAG
+
 
       - name: Wait for rollout to complete
         run: |
