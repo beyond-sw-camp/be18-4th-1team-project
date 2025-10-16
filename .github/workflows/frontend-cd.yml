@@ -1,9 +1,11 @@
-name: front-cd.yml
+
+name: Frontend CD
 
 on:
-  pull_request:
-    branches:
-      - '**'
+  workflow_run:
+    workflows: ["frontend-ci-push.yml"]
+    types:
+      - completed
 
 jobs:
   deploy:
