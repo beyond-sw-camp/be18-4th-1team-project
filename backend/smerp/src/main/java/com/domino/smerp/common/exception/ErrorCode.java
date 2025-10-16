@@ -64,8 +64,6 @@ public enum ErrorCode {
     // stock
     STOCK_NOT_FOUND(HttpStatus.NOT_FOUND, "STOCK_NOT_FOUND", "품목에 대한 재고가 없습니다."),
     STOCK_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "STOCK_NOT_ENOUGH", "빼낼 재고 수량이 충분하지 않습니다."),
-    NO_WAREHOUSE_EMPTY(HttpStatus.BAD_REQUEST, "NO_WAREHOUSE_EMPTY", "재고를 넣을 창고 공간이 없습니다."),
-    LOCATION_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "LOCATION_NOT_ENOUGH", "재고를 넣을 창고 공간이 부족합니다."),
     ITEM_ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, "ITEM_ORDER_NOT_FOUND", "주문 품목 이 없습니다."),
 
     // order - 주문과 관련된 예외 정보
@@ -127,7 +125,11 @@ public enum ErrorCode {
 
     //WAREHOUSE
     WAREHOUSE_NOT_FOUND(HttpStatus.NOT_FOUND, "WAREHOUSE_NOT_FOUND", "없는 창고입니다."),
-    WAREHOUSE_DUPLICATE_NAME(HttpStatus.CONFLICT, "WAREHOUSE_DUPLICATE_NAME", "창고 이름 중복됩니다.");
+    WAREHOUSE_DUPLICATE_NAME(HttpStatus.CONFLICT, "WAREHOUSE_DUPLICATE_NAME", "창고 이름 중복됩니다."),
+    NO_WAREHOUSE_EMPTY(HttpStatus.BAD_REQUEST, "NO_WAREHOUSE_EMPTY", "재고를 넣을 창고 공간이 없습니다."),
+    LOCATION_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "LOCATION_NOT_ENOUGH", "재고를 넣을 창고 공간이 부족합니다.");
+
+
     private final HttpStatus status;
     private final String code;
     private final String message;
