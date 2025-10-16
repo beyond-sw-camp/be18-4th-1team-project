@@ -20,9 +20,11 @@ jobs:
           kubectl get nodes
 
       - name: "Create k8s secret.yaml"
+        env:
+          MYSQL_DATABASE: {{ secrets.MYSQL_DATABASE }}
         run: |
           kubectl --% secret generic cluster-secret `
-            --from-literal=spring_datasource_url=jdbc:mariadb://localhost:3306/${{ secrets.MYSQL_DATABASE }} `
+            --from-literal=spring_datasource_url=jdbc:mariadb://localhost:3306/$env:MYSQL_DATABASE `
             --from-literal=db_user=${{ secrets.SPRING_DATASOURCE_USERNAME }} `
             --from-literal=db_password=${{secrets.SPRING_DATASOURCE_PASSWORD}} `
             --from-literal=spring_datasource_driver=${{secrets.SPRING_DATASOURCE_DRIVER}} `
