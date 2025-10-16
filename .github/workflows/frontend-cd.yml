@@ -31,11 +31,10 @@ jobs:
         shell: powershell
         run: |
           $IMAGE_TAG = "${{ github.sha }}"
-          Write-Host "Deploying image tag: $IMAGE_TAG"
           $DOCKER_USER = "${{ secrets.FRONT_DOCKER_USERNAME }}"
           $IMAGE_NAME = "${{ secrets.FRONT_IMAGE_NAME }}"
-          $FULL_IMAGE = "$DOCKER_USER/$IMAGE_NAME:${IMAGE_TAG}"
-          Write-Host "Setting image to: $FULL_IMAGE"
+          $FULL_IMAGE = "$DOCKER_USER/$IMAGE_NAME" + ":" + "$IMAGE_TAG"
+          Write-Host "Deploying image: $FULL_IMAGE"
           kubectl set image deployment/smerp-frontend `
             smerp-frontend=$FULL_IMAGE
 
