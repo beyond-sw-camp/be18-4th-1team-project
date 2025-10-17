@@ -67,7 +67,7 @@ jobs:
         shell: powershell
         run: |
           kubectl rollout status deployment/smerp-frontend `
-            -n $env:NAMESPACE --timeout=90s
+            -n $env:NAMESPACE --timeout=180s
 
       - name: Check running pods and services
         shell: powershell
