@@ -51,7 +51,9 @@ jobs:
         run: |
           kubectl apply -f service.yaml -n $env:NAMESPACE
           kubectl apply -f deployment.yaml -n $env:NAMESPACE
-          kubectl patch deployment smerp-frontend -n $env:NAMESPACE --type=json -p '[{"op":"replace","path":"/spec/template/spec/imagePullSecrets/0/name","value":"regsecret"}]'
+          $json = '[{"op":"replace","path":"/spec/template/spec/imagePullSecrets/0/name","value":"regsecret"}]'
+          kubectl patch deployment smerp-frontend -n $env:NAMESPACE --type=json -p $json
+
 
       - name: Update Deployment with new image
         shell: powershell
