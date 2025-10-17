@@ -2,13 +2,15 @@
 name: frontend-cd.yml
 
 on:
-  push:
-    branches:
-      - main
-      - temp/test-branch
+  workflow_run:
+    workflows: ["frontend-ci-push.yml"]  # CI 워크플로 이름과 동일하게 써야 함
+    types:
+      - completed                         # CI가 완료될 때
+
 jobs:
   deploy:
     runs-on: [self-hosted]
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     name: "Deploy to Local Kubernetes"
 
