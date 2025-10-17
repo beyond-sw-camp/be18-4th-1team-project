@@ -17,7 +17,7 @@ spec:
         - name: dockerhub-secret
       containers:
         - name: smerp-frontend
-          image: promandu/smerp-frontend:${GITHUB_SHA}
+          image: promandu/smerp-frontend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 80
