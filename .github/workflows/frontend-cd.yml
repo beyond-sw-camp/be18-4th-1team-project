@@ -2,10 +2,9 @@
 name: frontend-cd.yml
 
 on:
-  pull_request:
+  push:
     branches:
-      - develop
-      - main
+      - feature/34-front-refactor
 
 jobs:
   deploy:
