@@ -15,7 +15,7 @@ jobs:
     env:
       DOCKER_USER: ${{ secrets.BACK_DOCKER_USERNAME }}
       IMG_NAME: ${{ secrets.BACK_IMAGE_NAME }}
-      NAMESPACE: "test"
+      NAMESPACE: "smerp"
 
     steps:
       - name: Create namespace if not exists

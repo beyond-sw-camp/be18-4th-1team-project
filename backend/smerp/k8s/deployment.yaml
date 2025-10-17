@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
-  namespace: test
+  namespace: smerp
 spec: #deployment spec
   replicas: 1
   selector:
