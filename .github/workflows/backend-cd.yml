@@ -85,7 +85,7 @@ jobs:
       - name: Wait for rollout to complete
         shell: powershell
         run: |
-          kubectl rollout status deployment/backend -n $env:NAMESPACE --timeout=0s
+          kubectl rollout status deployment/backend -n $env:NAMESPACE --timeout=600s
 
       - name: Check running pods and services
         shell: powershell
