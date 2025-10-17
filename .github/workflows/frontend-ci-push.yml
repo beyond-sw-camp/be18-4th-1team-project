@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+      - temp/test-branch
+
 
 jobs:
   build:

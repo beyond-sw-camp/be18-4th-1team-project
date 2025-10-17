@@ -7,7 +7,7 @@ on:
       - develop
   push:
     branches:
-      - develop
+      - temp/test-branch
 
 jobs:
   build:
