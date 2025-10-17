@@ -71,7 +71,7 @@ jobs:
         shell: powershell
         run: |
           $IMG_TAG = $env:GITHUB_SHA
-          $FULL_IMAGE = "$env:DOCKER_USER/$env:IMG_NAME" + ":" + "$IMAGE_TAG"
+          $FULL_IMAGE = "$env:DOCKER_USER/$env:IMG_NAME" + ":" + "$IMG_TAG"
 
           Write-Host "Deploying image: $FULL_IMAGE"
           
