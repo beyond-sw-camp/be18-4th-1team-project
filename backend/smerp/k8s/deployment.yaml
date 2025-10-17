@@ -39,7 +39,6 @@ spec: #deployment spec
                   name: cluster-secret
                   key: spring_datasource_driver
 
-            # Secret에서 가져오는 값
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
