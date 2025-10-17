@@ -7,19 +7,43 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
-    name: "deploy to local k8s"
+    name: deploy to local k8s
+
+    env:
+      DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+      IMAGE_NAME: ${{ secrets.IMG_NAME }}
+      NAMESPACE: "smerp"
 
     steps:
-      - name: "Checkout code"
+      - name: Create namespace if not exists
+        shell: powershell
+        run: |
+          $ns = $env:NAMESPACE
+          Write-Host "Checking if namespace '$ns' exists..."
+
+          $ErrorActionPreference = "SilentlyContinue"
+          $exists = kubectl get namespace $ns -o json
+
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "Namespace '$ns' not found. Creating..."
+            kubectl create namespace $ns
+          } else {
+            Write-Host "Namespace '$ns' already exists."
+          }
+
+          # 다시 오류 감지 모드 복원
+          $ErrorActionPreference = "Stop"
+
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: "Checkout kubectl context"
+      - name: Checkout kubectl context
         run: |
           echo "Checking current context"
           kubectl config current-context
           kubectl get nodes
 
-      - name: "Create k8s secret.yaml"
+      - name: Create k8s secret.yaml
         env:
           MYSQL_DATABASE: ${{ secrets.DATABASE }}
           SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
@@ -33,28 +57,34 @@ jobs:
         run: |
           kubectl create secret generic cluster-secret --from-literal=spring_datasource_url=$env:SPRING_DATASOURCE_URL --from-literal=db_user=$env:SPRING_DATASOURCE_USERNAME --from-literal=db_password=$env:SPRING_DATASOURCE_PASSWORD --from-literal=spring_datasource_driver=$env:SPRING_DATASOURCE_DRIVER --from-literal=server_port=$env:SERVER_PORT --from-literal=encrypt_key=$env:ENCRYPT_KEY --from-literal=encrypt_salt=$env:ENCRYPT_SALT --dry-run=client -o yaml | kubectl apply -f -
 
-      - name: "Apply k8s resources"
+      - name: Apply k8s resources
         working-directory: ./backend/smerp/k8s
         run: | 
           echo "Deploying backend"
           
-          kubectl apply -f deployment.yaml -n test
-          kubectl apply -f service.yaml -n test
+          kubectl apply -f deployment.yaml -n $env:NAMESPACE
+          kubectl apply -f service.yaml -n $env:NAMESPACE
           
           echo "manifests applied"
 
-#      - name: "Wait for rollout to complete"
-#        run: |
-#          DEPLOY_NAME=$(kubectl get deploy -n default -o jsonpath="{.items[0].metadata.name}")
-#          echo "Waiting for rollout of deployment: $DEPLOY_NAME"
-#          kubectl rollout status deployment/$DEPLOY_NAME --timeout=90s
-#          echo "Deployment rollout successful!"
-#
-#      - name: "Check running pods and services"
-#        run: |
-#          echo "Pods status:"
-#          kubectl get pods -o wide
-#          echo "Services:"
-#          kubectl get svc -o wide
-#
-#          #--from-literal=spring_datasource_url=jdbc:mariadb://localhost:3306/$env:MYSQL_DATABASE `
+      - name: Update Deployment with new image
+        shell: powershell
+        run: |
+          $IMAGE_TAG = $env:GITHUB_SHA
+          $FULL_IMAGE = "$env:DOCKER_USER/$env:IMAGE_NAME" + ":" + "$IMAGE_TAG"
+
+          Write-Host "Deploying image: $FULL_IMAGE"
+          
+          kubectl set image deployment/backend backend=$FULL_IMAGE -n $env:NAMESPACE
+
+      - name: Wait for rollout to complete
+        shell: powershell
+        run: |
+          kubectl rollout status deployment/backend -n $env:NAMESPACE --timeout=90s
+
+      - name: Check running pods and services
+        shell: powershell
+        run: |
+          kubectl get pods -n $env:NAMESPACE -o wide
+          kubectl get svc -n $env:NAMESPACE -o wide
+
