@@ -11,9 +11,9 @@ on:
 jobs:
   deploy:
     runs-on: [self-hosted]
-    name: "Deploy to Local Kubernetes"
-
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    name: "Deploy to Local Kubernetes"
 
     env:
       DOCKER_USER: ${{ secrets.FRONT_DOCKER_USERNAME }}
