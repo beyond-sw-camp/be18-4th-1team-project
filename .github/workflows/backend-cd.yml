@@ -13,8 +13,8 @@ jobs:
     name: deploy to local k8s
 
     env:
-      DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
-      IMG_NAME: ${{ secrets.IMG_NAME }}
+      DOCKER_USER: ${{ secrets.BACK_DOCKER_USERNAME }}
+      IMG_NAME: ${{ secrets.BACK_IMAGE_NAME }}
       NAMESPACE: "test"
 
     steps:
