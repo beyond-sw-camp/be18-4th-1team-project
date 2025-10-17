@@ -11,7 +11,7 @@ jobs:
 
     env:
       DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
-      IMAGE_NAME: ${{ secrets.IMG_NAME }}
+      IMG_NAME: ${{ secrets.IMG_NAME }}
       NAMESPACE: "test"
 
     steps:
@@ -70,8 +70,8 @@ jobs:
       - name: Update Deployment with new image
         shell: powershell
         run: |
-          $IMAGE_TAG = $env:GITHUB_SHA
-          $FULL_IMAGE = "$env:DOCKER_USER/$env:IMAGE_NAME" + ":" + "$IMAGE_TAG"
+          $IMG_TAG = $env:GITHUB_SHA
+          $FULL_IMAGE = "$env:DOCKER_USER/$env:IMG_NAME" + ":" + "$IMAGE_TAG"
 
           Write-Host "Deploying image: $FULL_IMAGE"
           

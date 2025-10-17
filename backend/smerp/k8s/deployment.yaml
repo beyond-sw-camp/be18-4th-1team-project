@@ -13,6 +13,8 @@ spec: #deployment spec
       labels:
         app: backend
     spec: #pod spec
+      imagePullSecrets:
+        - name: regsecret
       containers:
         - name: backend
           image: pcochoco/backend:latest
@@ -84,5 +86,4 @@ spec: #deployment spec
 
 
       restartPolicy: Always
-      imagePullSecrets:
-        - name: regsecret
+
