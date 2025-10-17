@@ -2,13 +2,14 @@
 name: frontend-cd.yml
 
 on:
-  pull_request:
-    branches:
-      - develop
-      - main
+  workflow_run:
+    workflows: ["frontend-ci-push.yml"]
+    types:
+      - completed
 
 jobs:
   deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: [self-hosted, Windows, X64]
     name: "Deploy to Local Kubernetes"
 
@@ -68,7 +69,7 @@ jobs:
         shell: powershell
         run: |
           kubectl rollout status deployment/smerp-frontend `
-            -n $env:NAMESPACE --timeout=90s
+            -n $env:NAMESPACE --timeout=600s
 
       - name: Check running pods and services
         shell: powershell
