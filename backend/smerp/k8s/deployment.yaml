@@ -65,11 +65,11 @@ spec: #deployment spec
                   key: encrypt_salt
 
             #build.gradle 내용이므로 동일하게 달리 적용해줘야할지 아니면 구별 없어도 될지
-            - name: QUERYDSL_VERSION
+            - name: QUERYDSLVERSION
               valueFrom:
                 secretKeyRef:
                   name: cluster-secret
-                  key: querydsl_version
+                  key: querydslversion
 
 
 #                  - name: MYSQL_PORT
