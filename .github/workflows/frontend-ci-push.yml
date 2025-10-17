@@ -3,7 +3,7 @@ name: frontend-ci-push.yml
 on:
   push:
     branches:
-      - feature/34-front-refactor
+      - main
 
 jobs:
   build:

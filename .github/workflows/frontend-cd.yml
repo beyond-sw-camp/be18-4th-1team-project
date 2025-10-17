@@ -2,12 +2,14 @@
 name: frontend-cd.yml
 
 on:
-  push:
-    branches:
-      - feature/34-front-refactor
+  workflow_run:
+    workflows: ["frontend-ci-push.yml"]
+    types:
+      - completed
 
 jobs:
   deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: [self-hosted, Windows, X64]
     name: "Deploy to Local Kubernetes"
 

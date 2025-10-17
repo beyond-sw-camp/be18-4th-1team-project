@@ -1,9 +1,13 @@
 name: frontend-ci-build.yml
 
 on:
+  pull_request:
+    branches:
+      - main
+      - develop
   push:
     branches:
-      - feature/34-front-refactor
+      - develop
 
 jobs:
   build:
