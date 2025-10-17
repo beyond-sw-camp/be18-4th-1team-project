@@ -55,3 +55,7 @@ jobs:
             -t $FRONT_DOCKER_USERNAME/$FRONT_IMAGE_NAME:$IMAGE_TAG \
             ./frontend/smerp-client
           docker push $FRONT_DOCKER_USERNAME/$FRONT_IMAGE_NAME:$IMAGE_TAG
+          docker tag $FRONT_DOCKER_USERNAME/$FRONT_IMAGE_NAME:$IMAGE_TAG $FRONT_DOCKER_USERNAME/$FRONT_IMAGE_NAME:latest
+          docker push $FRONT_DOCKER_USERNAME/$FRONT_IMAGE_NAME:latest
+
+
