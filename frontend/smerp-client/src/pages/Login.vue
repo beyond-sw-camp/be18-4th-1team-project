@@ -11,7 +11,7 @@
                     data-bs-target="#contactModal">가입문의</button>
             </div>
 
-            <h6 class="text-muted mb-1">환영합니다.25.10.17.12:44</h6>
+            <h6 class="text-muted mb-1">환영합니다.25.10.17.15:52</h6>
             <h3 class="fw-bold mb-4">로그인</h3>
 
             <form @submit.prevent="onSubmit">
