@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: smerp-frontend
-  namespace: smerp  # 여기에 추가
+  namespace: smerp
 spec:
   replicas: 1
   selector:
@@ -13,14 +13,11 @@ spec:
       labels:
         app: smerp-frontend
     spec:
-      template:
-        spec:
-          imagePullSecrets:
-            - name: regsecret  # Secret 이름 통일
-          containers:
-            - name: smerp-frontend
-              image: pcochoco/frontend:${GITHUB_SHA}  # CD에서 자동 치환됨
-              imagePullPolicy: Always
-              ports:
-                - containerPort: 80
-
+      imagePullSecrets:
+        - name: dockerhub-secret
+      containers:
+        - name: smerp-frontend
+          image: promandu/smerp-frontend:${GITHUB_SHA}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
