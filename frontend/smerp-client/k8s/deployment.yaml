@@ -13,11 +13,14 @@ spec:
       labels:
         app: smerp-frontend
     spec:
-      imagePullSecrets:
-        - name: dockerhub-secret
-      containers:
-        - name: smerp-frontend
-          image: promandu/smerp-frontend:latest
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 80
+      template:
+        spec:
+          imagePullSecrets:
+            - name: regsecret  # Secret 이름 통일
+          containers:
+            - name: smerp-frontend
+              image: pcochoco/frontend:${GITHUB_SHA}  # CD에서 자동 치환됨
+              imagePullPolicy: Always
+              ports:
+                - containerPort: 80
+
