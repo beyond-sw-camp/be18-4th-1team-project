@@ -14,7 +14,7 @@ spec:
         app: smerp-frontend
     spec:
       imagePullSecrets:
-        - name: regsecret
+        - name: dockerhub-secret
       containers:
         - name: smerp-frontend
           image: promandu/smerp-frontend:latest
