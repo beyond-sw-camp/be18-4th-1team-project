@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: pcochoco/backend:dc03a9e797dfb2d42c1bc8ff7de37a0a47452ace
+          image: pcochoco/backend:8e5a8d19203b7451846b63f10bf05d9bcf4d3573
           imagePullPolicy: Always
           env:
             - name: SERVER_PORT
