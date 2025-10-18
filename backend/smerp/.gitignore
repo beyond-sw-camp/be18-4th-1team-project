@@ -47,3 +47,5 @@ docker-compose.yml
 
 .gradle/
 node_modules/
+
+deployment-local.yaml
