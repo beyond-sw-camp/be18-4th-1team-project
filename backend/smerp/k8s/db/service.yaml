@@ -1,13 +1,11 @@
-# service
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend
+  name: mariadb-service
 spec:
-  selector:
-    app: backend #deployment 찾는 label
   ports:
-    - protocol: TCP
-      port: 3306
+    - port: 3306
       targetPort: 3306
+  selector:
+    app: mariadb
   type: ClusterIP
