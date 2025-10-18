@@ -3,7 +3,7 @@ name: backend-ci-push.yml
 on:
   push:
     branches:
-      - feature/36-backend-k8s
+      - main
 
 jobs:
   build:

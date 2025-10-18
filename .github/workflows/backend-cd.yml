@@ -2,7 +2,7 @@ name: backend-cd.yml
 on:
   push:
     branches:
-      - feature/36-backend-k8s
+      - main
   workflow_run:
     workflows: [ "backend-ci-push.yml" ]
     types:
