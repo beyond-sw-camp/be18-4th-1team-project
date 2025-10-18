@@ -17,7 +17,7 @@ spec: #deployment spec
         - name: regsecret
       containers:
         - name: backend
-          image: pcochoco1/backend:dc03a9e797dfb2d42c1bc8ff7de37a0a47452ace
+          image: pcochoco1/backend:d9bbf604f203c9cd99ba3b7299a95d752fff6278
           imagePullPolicy: Always
           env:
 
