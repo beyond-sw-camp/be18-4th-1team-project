@@ -29,7 +29,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: cluster-secret # Secret의 이름
-                  key: db_root_password # Secret의 data에 들어간 key:value
+                  key: mariadb_root_password # Secret의 data에 들어간 key:value
 
             - name: MARIADB_USER
               valueFrom:
