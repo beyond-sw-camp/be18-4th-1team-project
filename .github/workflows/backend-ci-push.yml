@@ -44,7 +44,7 @@ jobs:
       #컴파일(테스트 포함)
       - name: Build application
         working-directory: backend/smerp
-        #build, test용 가짜 환경변수
+        
         env:
           MYSQL_HOST: mariadb
           MYSQL_PORT: ${{ secrets.DB_PORT }}
