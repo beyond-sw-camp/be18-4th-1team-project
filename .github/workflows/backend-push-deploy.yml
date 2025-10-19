@@ -3,7 +3,7 @@ name: backend-push-deploy.yml
 on:
   push:
     branches:
-#      - main
+      - main
 #      - feature/30-backend-cd
 
 jobs:
@@ -173,11 +173,12 @@ jobs:
         MARIADB_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
         MARIADB_USER: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
         MARIADB_USER_PW: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+        MYSQL_DATABASE: ${{ secrets.DATABASE }}
 
       shell: powershell
       run: |
         $DB_POD = kubectl get pods -n $env:NAMESPACE -l app=mariadb -o jsonpath='{.items[0].metadata.name}'
-        kubectl exec -n $env:NAMESPACE $DB_POD -c mariadb -- mariadb -uroot -p$env:MARIADB_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS domino; CREATE USER '$($env:MARIADB_USER)'@'%' IDENTIFIED BY '$($env:MARIADB_USER_PW)'; GRANT ALL PRIVILEGES ON domino.* TO '$($env:MARIADB_USER)'@'%'; FLUSH PRIVILEGES;"
+        kubectl exec -n $env:NAMESPACE $($DB_POD) -c mariadb -- mariadb -uroot -p$env:MARIADB_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS $($env:DATABASE); CREATE USER '$($env:MARIADB_USER)'@'%' IDENTIFIED BY '$($env:MARIADB_USER_PW)'; GRANT ALL PRIVILEGES ON $($env:DATABASE).* TO '$($env:MARIADB_USER)'@'%'; FLUSH PRIVILEGES;"
 
 
     - name: Apply k8s resources
