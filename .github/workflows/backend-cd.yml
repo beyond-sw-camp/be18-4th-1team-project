@@ -4,10 +4,10 @@ on:
     branches:
       - main
       - feature/30-backend-cd
-  workflow_run:
-    workflows: [ "backend-ci-push.yml" ]
-    types:
-      - completed
+#  workflow_run:
+#    workflows: [ "backend-ci-push.yml" ]
+#    types:
+#      - completed
 jobs:
   deploy:
     runs-on: self-hosted

@@ -8,7 +8,7 @@ on:
   push:
     branches:
       - develop
-      - feature/30-backend-cd
+#      - feature/30-backend-cd #push -> deploy만 확인하면 됨
 
 jobs:
   build:
