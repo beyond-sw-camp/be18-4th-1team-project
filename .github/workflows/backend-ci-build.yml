@@ -8,7 +8,7 @@ on:
   push:
     branches:
       - develop
-      - feature/backend-cicd-test
+      - feature/30-backend-cd
 
 jobs:
   build:
