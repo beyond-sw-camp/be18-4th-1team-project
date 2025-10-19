@@ -167,6 +167,19 @@ jobs:
         
         echo "manifests applied"
 
+    - name: Initialize MariaDB
+      env:
+        NAMESPACE: "smerp"
+        MARIADB_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
+        MARIADB_USER: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+        MARIADB_USER_PW: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+
+      shell: powershell
+      run: |
+        $DB_POD = kubectl get pods -n $env:NAMESPACE -l app=mariadb -o jsonpath='{.items[0].metadata.name}'
+        kubectl exec -n $env:NAMESPACE $DB_POD -- mariadb -uroot -p$env:MARIADB_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS domino; CREATE USER '$($env:MARIADB_USER)'@'%' IDENTIFIED BY '$($env:MARIADB_PW)'; GRANT ALL PRIVILEGES ON domino.* TO '$($env:MARIADB_USER)'@'%'; FLUSH PRIVILEGES;"
+
+
     - name: Apply k8s resources
       env:
         NAMESPACE: "smerp"
