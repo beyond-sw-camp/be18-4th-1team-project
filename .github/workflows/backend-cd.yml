@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-      - feature/30-backend-cd
+#      - feature/30-backend-cd
 #  workflow_run:
 #    workflows: [ "backend-ci-push.yml" ]
 #    types:

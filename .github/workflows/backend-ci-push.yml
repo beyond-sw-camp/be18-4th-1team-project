@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - feature/30-backend-cd
+#      - feature/30-backend-cd
 
 jobs:
   build:
@@ -44,7 +44,7 @@ jobs:
       #컴파일(테스트 포함)
       - name: Build application
         working-directory: backend/smerp
-        
+
         env:
           MYSQL_HOST: mariadb
           MYSQL_PORT: ${{ secrets.DB_PORT }}
