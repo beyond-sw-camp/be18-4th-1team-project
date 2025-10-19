@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-#      - feature/30-backend-cd
+      - feature/30-backend-cd
 
 jobs:
   build-and-push:
