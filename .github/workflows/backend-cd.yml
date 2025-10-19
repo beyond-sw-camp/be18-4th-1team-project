@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - feature/backend-cicd-test
   workflow_run:
     workflows: [ "backend-ci-push.yml" ]
     types:
