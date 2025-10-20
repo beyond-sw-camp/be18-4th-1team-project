@@ -193,7 +193,7 @@ jobs:
         GRANT ALL PRIVILEGES ON $($env:MARIA_DATABASE).* TO '$($env:MARIADB_USER)'@'%';
         FLUSH PRIVILEGES;
         "
-        kubectl exec -i $DB_POD -n $env:NAMESPACE -- mariadb -u root -p"$($env:MARIADB_ROOT_PASSWORD)" -e "$sql"
+        kubectl exec -i $DB_POD -n $env:NAMESPACE -- mariadb -h 127.0.0.1 -u root -p"$($env:MARIADB_ROOT_PASSWORD)" -e "$sql"
 
 #        $sqlFile = "init.sql"
 #        @"
