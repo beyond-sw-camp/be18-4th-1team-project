@@ -16,5 +16,6 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          args: '${{ github.actor }}님이 ${{ github.repository }} 저장소에 ${{ github.event_name }}하였습니다.'
+          args: '${{ github.actor }}님이 ${{ github.repository }} 저장소의 `${{ github.ref_name }}` 브랜치에서 ${{ github.event_name }}하였습니다.'
+          
 
