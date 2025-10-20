@@ -1,11 +1,16 @@
 name: Discord Notification
 
+#on:
+#  issues:
+#    types: [opened]
+#  push:
+#  pull_request:
+#    types: [opened]
+
 on:
-  issues:
-    types: [opened]
   push:
-  pull_request:
-    types: [opened]
+    branches:
+      - main
 
 jobs:
   notify:
