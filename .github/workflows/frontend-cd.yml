@@ -1,18 +1,17 @@
 
-name: frontend-cd-test.yml
+name: frontend-cd.yml
 
 on:
   workflow_run:
-    workflows: ["frontend-ci-test-push.yml"]
+    workflows: ["frontend-ci-push.yml"]
     types:
       - completed
 
 jobs:
   deploy:
     runs-on: [self-hosted, Windows, X64, local-dev]  # 내 로컬 러너 한정
-    name: "Deploy to Local Kubernetes"
-
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: "Deploy to Local Kubernetes"
 
     env:
       DOCKER_USER: ${{ secrets.FRONT_DOCKER_USERNAME }}
@@ -56,13 +55,16 @@ jobs:
           kubectl apply -f service.yaml -n $env:NAMESPACE
           kubectl apply -f deployment.yaml -n $env:NAMESPACE
 
+      - name: Log image version
+        shell: powershell
+        run: |
+          Write-Host "Deploying commit SHA: ${{ github.event.workflow_run.head_sha }}"
+
       - name: Update Deployment with new image
         shell: powershell
         run: |
           $FULL_IMAGE = "$env:DOCKER_USER/$env:IMAGE_NAME:$env:IMAGE_TAG"
-
           Write-Host "Deploying image: $FULL_IMAGE"
-          
           kubectl set image deployment/smerp-frontend `
             smerp-frontend=$FULL_IMAGE -n $env:NAMESPACE
 
