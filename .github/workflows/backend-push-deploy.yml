@@ -72,8 +72,10 @@ jobs:
         uses: docker/login-action@v2
         with:
           #access key, secret key
+          registry: ghcr.io
           username: ${{ secrets.BACK_DOCKER_USERNAME }}
-          password: ${{ secrets.BACK_DOCKER_PASSWORD }}
+          password: ${{ secrets.BACK_GHCR_PASSWORD }}
+
 
 #      - name: Login to GitHub Container Registry
 #        uses: docker/login-action@v2
@@ -88,15 +90,15 @@ jobs:
       - name: Build and push docker image
         env:
           DOCKER_USERNAME: ${{ secrets.BACK_DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.BACK_DOCKER_PASSWORD }}
+          DOCKER_PASSWORD: ${{ secrets.BACK_GHCR_PASSWORD }}
           IMG_NAME: ${{ secrets.BACK_IMAGE_NAME }}
           QUERYDSLVERSION: ${{ secrets.QUERYDSLVERSION }}
         run: |
           docker build \
             -f backend/smerp/Dockerfile \
             --build-arg QUERYDSLVERSION=$QUERYDSLVERSION \
-            -t ghrc.io/$DOCKER_USERNAME/$IMG_NAME:$IMAGE_TAG .
-          docker push $DOCKER_USERNAME/$IMG_NAME:$IMAGE_TAG
+            -t ghcr.io/$DOCKER_USERNAME/$IMG_NAME:$IMAGE_TAG .
+          docker push ghcr.io/$DOCKER_USERNAME/$IMG_NAME:$IMAGE_TAG
           
           #          docker build \
           #            -f backend/smerp/Dockerfile \
@@ -229,7 +231,7 @@ jobs:
       run: |
         $IMG_TAG = $env:GITHUB_SHA
 
-        $FULL_IMAGE = "$env:DOCKER_USER/$env:IMG_NAME" + ":" + "$IMG_TAG"
+        $FULL_IMAGE = "ghcr.io/$env:DOCKER_USER/$env:IMG_NAME" + ":" + "$IMG_TAG"
 
         Write-Host "Deploying image: $FULL_IMAGE"
         
