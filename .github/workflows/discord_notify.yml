@@ -16,4 +16,5 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          args: 'GitHub 이벤트 발생: ${{ github.event_name }} by ${{ github.actor }}'
+          args: '${{ github.actor }}님이 ${{ github.repository }} 저장소에 ${{ github.event_name }}하였습니다.'
+
