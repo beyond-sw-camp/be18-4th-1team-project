@@ -181,18 +181,16 @@ jobs:
         
         $DB_POD = kubectl get pods -n $env:NAMESPACE -l app=mariadb -o jsonpath='{.items[0].metadata.name}'
         
-        kubectl exec -i $DB_POD -n $env:NAMESPACE -- `
-          mariadb -h 127.0.0.1 -u root "-p$($env:MARIADB_ROOT_PASSWORD)" `
-          -e "ALTER USER 'root'@'%' IDENTIFIED BY '$($env:MARIADB_ROOT_PASSWORD)'; FLUSH PRIVILEGES;"
-        
-        $sql = @"
-        CREATE DATABASE IF NOT EXISTS `{$env:MARIA_DATABASE}`;
-        CREATE USER IF NOT EXISTS '{$env:MARIADB_USER}'@'%' IDENTIFIED BY '{$env:MARIADB_USER_PW}';
-        GRANT ALL PRIVILEGES ON '{$env:MARIA_DATABASE}'.* TO '{$env:MARIADB_USER}'@'%';
+#        kubectl exec -i $DB_POD -n $env:NAMESPACE -- `
+#          mariadb -h 127.0.0.1 -u root "-p$($env:MARIADB_ROOT_PASSWORD)" `
+#          -e "ALTER USER 'root'@'%' IDENTIFIED BY '$($env:MARIADB_ROOT_PASSWORD)'; FLUSH PRIVILEGES;"
+#
+        $sql = "CREATE DATABASE IF NOT EXISTS $($env:MARIA_DATABASE);
+        CREATE USER IF NOT EXISTS '$($env:MARIADB_USER)'@'%' IDENTIFIED BY '$($env:MARIADB_USER_PW)';
+        GRANT ALL PRIVILEGES ON $($env:MARIA_DATABASE).* TO '$($env:MARIADB_USER)'@'%';
         FLUSH PRIVILEGES;
-        "@ 
-        $sql | kubectl exec -i $DB_POD -n $env:NAMESPACE -- `
-        mariadb -h 127.0.0.1 -u root "-p$($env:MARIADB_ROOT_PASSWORD)"
+        "
+        kubectl exec -i $DB_POD -n $env:NAMESPACE -- mariadb -u root -p"$($env:MARIADB_ROOT_PASSWORD)" -e "$sql"
 
 #        $sqlFile = "init.sql"
 #        @"
