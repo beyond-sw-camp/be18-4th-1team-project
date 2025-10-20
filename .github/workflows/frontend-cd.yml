@@ -63,7 +63,7 @@ jobs:
       - name: Update Deployment with new image
         shell: powershell
         run: |
-          $FULL_IMAGE = "$env:DOCKER_USER/$env:IMAGE_NAME:$env:IMAGE_TAG"
+          $FULL_IMAGE = $env:DOCKER_USER + "/" + $env:IMAGE_NAME + ":" + $env:IMAGE_TAG
           Write-Host "Deploying image: $FULL_IMAGE"
           kubectl set image deployment/smerp-frontend `
             smerp-frontend=$FULL_IMAGE -n $env:NAMESPACE
