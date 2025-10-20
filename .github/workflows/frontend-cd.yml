@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, Windows, X64, local-dev]  # 내 로컬 러너 한정
 
     name: "Deploy to Local Kubernetes"
 
