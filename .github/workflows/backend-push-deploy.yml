@@ -191,9 +191,9 @@ jobs:
         GRANT ALL PRIVILEGES ON `{$env:MARIA_DATABASE}`.* TO `{$env:MARIADB_USER}`@'%';
         FLUSH PRIVILEGES;
         '@ 
-
         $sql | kubectl exec -i $DB_POD -n $env:NAMESPACE -- `
         mariadb -h 127.0.0.1 -u root "-p$($env:MARIADB_ROOT_PASSWORD)"
+
 #        $sqlFile = "init.sql"
 #        @"
 #        CREATE DATABASE IF NOT EXISTS '$($env:MARIA_DATABASE)';
