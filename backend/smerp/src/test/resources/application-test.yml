@@ -25,6 +25,9 @@ logging:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
     org.springframework: info
+    org.springframework.security: debug
+    org.springframework.security.web: debug
+    org.springframework.security.config: debug
 
 server:
   port: ${SERVER_PORT}
