@@ -1,0 +1,6 @@
+- name: Discord notification
+  env:
+    DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+  uses: Ilshidur/action-discord@master
+  with:
+    args: 'PR or Issue or Push 이벤트 발생: {{ GITHUB_EVENT_NAME }} by {{ GITHUB_ACTOR }} ({{ GITHUB_REPOSITORY }})'
