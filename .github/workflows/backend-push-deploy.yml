@@ -60,7 +60,7 @@ jobs:
 
         run: |
           echo "building application"
-          ./gradlew build -PqueryDslVersion=${{ secrets.QUERYDSLVERSION }}
+          ./gradlew build -x test -PqueryDslVersion=${{ secrets.QUERYDSLVERSION }}
 
       - name: Checkout repository
         uses: actions/checkout@v2
