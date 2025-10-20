@@ -848,5 +848,11 @@
 </details>
 <br>
 
+## <a id="requirements"></a>19. CI/CD 시스템 아키택처
+<details>
+  <img width="1600" height="1084" alt="Group 1" src="https://github.com/user-attachments/assets/8120c15a-47cd-4c3b-836e-2a55195707b0" />
+
+  
+</details>
 
 <br>
