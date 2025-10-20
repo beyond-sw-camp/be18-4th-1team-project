@@ -180,15 +180,17 @@ jobs:
         Start-Sleep -Seconds 5
         
         $DB_POD = kubectl get pods -n $env:NAMESPACE -l app=mariadb -o jsonpath='{.items[0].metadata.name}'
-        $sql = @"
+        $sqlFile = "init.sql"
+        @"
         CREATE DATABASE IF NOT EXISTS '$($env:MARIA_DATABASE)';
         CREATE USER IF NOT EXISTS '$($env:MARIADB_USER)'@'%' IDENTIFIED BY '$($env:MARIADB_USER_PW)';
         GRANT ALL PRIVILEGES ON '$($env:MARIA_DATABASE)'.* TO '$($env:MARIADB_USER)'@'%';
         FLUSH PRIVILEGES;
-        "@
-#        kubectl exec -n $env:NAMESPACE $DB_POD -c mariadb -- \
-#          bash -c "mariadb -h 127.0.0.1 -u root -p$env:MARIADB_ROOT_PASSWORD -e `"$SQL`""
-    - name: Apply k8s resources
+        "@ | Set-Content $sqlFile
+  
+        Get-Content $sqlFile | kubectl exec -i $DB_POD -n $env:NAMESPACE -- mariadb -u root -p$env:MARIADB_ROOT_PASSWORD    - name: Apply k8s resources
+
+    - name: deploy backend
       env:
         NAMESPACE: "smerp"
       shell: powershell
