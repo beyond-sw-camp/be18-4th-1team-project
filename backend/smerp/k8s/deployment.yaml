@@ -14,10 +14,11 @@ spec: #deployment spec
         app: backend
     spec: #pod spec
       imagePullSecrets:
-        - name: regsecret
+        - name: regsecret2
       containers:
         - name: backend
           image: pcochoco1/backend:d9bbf604f203c9cd99ba3b7299a95d752fff6278
+#          image: ghcr.io/pcochoco/backend:1.0
           imagePullPolicy: Always
           env:
 
