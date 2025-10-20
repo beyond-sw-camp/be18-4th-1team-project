@@ -1,0 +1,22 @@
+#!/bin/sh
+
+PROJECT_ROOT=$(git rev-parse --show-toplevel)
+
+# Part 1: 스테이징된 파일 목록 가져오기
+stagedFiles=$(git diff --staged --name-only)
+
+# Part 2: Spotless 적용
+echo "Running spotlessApply. Formatting code..."
+cd $PROJECT_ROOT && ./gradlew spotlessApply
+
+if [ $? -ne 0 ]; then
+  echo "Spotless apply failed!"
+  exit 1
+fi
+
+# Part 3: 다시 add 해서 변경사항 반영
+for file in $stagedFiles; do
+  if test -f "$file"; then
+    git add $file
+  fi
+done
