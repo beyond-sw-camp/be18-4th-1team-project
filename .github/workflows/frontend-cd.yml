@@ -62,7 +62,7 @@ jobs:
         shell: powershell
         run: |
           # GitHub SHA 태그로 설정
-          $IMAGE_TAG = "${{ github.event.workflow_run.head_sha }}"
+          $IMAGE_TAG = "${{ github.sha }}"
           $FULL_IMAGE = "$env:DOCKER_USER/$env:IMAGE_NAME" + ":" + "$IMAGE_TAG"
 
           Write-Host "Deploying image: $FULL_IMAGE"
