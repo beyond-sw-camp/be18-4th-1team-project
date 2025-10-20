@@ -184,9 +184,9 @@ jobs:
         kubectl exec -i $DB_POD -n $NAMESPACE -- mariadb -u root -p$MARIADB_ROOT_PASSWORD -e "ALTER USER 'root'@'%' IDENTIFIED BY '$MARIADB_ROOT_PASSWORD'; FLUSH PRIVILEGES;"
         
         $sql = @"
-        CREATE DATABASE IF NOT EXISTS "$($env:MARIA_DATABASE)";
-        CREATE USER IF NOT EXISTS "$($env:MARIADB_USER)"@'%' IDENTIFIED BY "$($env:MARIADB_USER_PW)";
-        GRANT ALL PRIVILEGES ON "$($env:MARIA_DATABASE)".* TO "$($env:MARIADB_USER)"@'%';
+        CREATE DATABASE IF NOT EXISTS `{$env:MARIA_DATABASE}`;
+        CREATE USER IF NOT EXISTS `{$env:MARIADB_USER}`@'%' IDENTIFIED BY `{$env:MARIADB_USER_PW}`;
+        GRANT ALL PRIVILEGES ON `${$env:MARIA_DATABASE}`.* TO `{$env:MARIADB_USER}`@'%';
         FLUSH PRIVILEGES;
         "@ 
 
