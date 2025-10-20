@@ -1,5 +1,5 @@
 
-name: frontend-cd.yml
+name: frontend-cd-test.yml
 
 on:
   workflow_run:
