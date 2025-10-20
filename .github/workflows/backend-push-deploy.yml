@@ -95,7 +95,7 @@ jobs:
           docker build \
             -f backend/smerp/Dockerfile \
             --build-arg QUERYDSLVERSION=$QUERYDSLVERSION \
-            -t ghrc.io/$DOCKER_USERNAME/$IMG_NAME:$IMAGE_TAG .
+            -t $DOCKER_USERNAME/$IMG_NAME:$IMAGE_TAG .
           docker push $DOCKER_USERNAME/$IMG_NAME:$IMAGE_TAG
           
           #          docker build \
