@@ -1,8 +1,3 @@
-# 📉 Project_SMERP
-
-# <img src="docs/팀 도미노.svg">
-
-
 ## ✨팀원✨
 <table style="width:100%;">
   <thead>
@@ -852,7 +847,104 @@
 <details>
   <img width="1600" height="1084" alt="Group 1" src="https://github.com/user-attachments/assets/8120c15a-47cd-4c3b-836e-2a55195707b0" />
 
-  
 </details>
 
+## <a id="requirements"></a>20. CI/CD 
+<details>
+  <summary><b>User</b></summary>
+  <br>
+  <b>📌 UserServiceImplSecurityTest</b> 
+  <br>
+  <img width="1918" height="867" alt="UserServiceImplSecurityTest" src="https://github.com/user-attachments/assets/ff488ca7-ff07-4f2b-82b0-47ba7524dc44" />
+  <hr>
+  <br>
+  <b>📌 UserServiceImplSecurityTest_Standard output</b> 
+  <br>
+  <img width="1487" height="141" alt="UserServiceImplSecurityTest_Standard output" src="https://github.com/user-attachments/assets/01fa192c-633f-45a9-901d-13c3cbad14b7" />
+  <br>
+  <hr>
+  <b>📌 CreateUserTest</b> 
+  <br>
+  <img width="1918" height="867" alt="CreateUserTest" src="https://github.com/user-attachments/assets/95f8802f-2bb4-487d-bde0-1fac60553d7f" />
+  <br>
+  <hr>
+  <b>📌 UpdateUserTest</b> 
+  <br>
+  <img width="1918" height="867" alt="UpdateUserTest" src="https://github.com/user-attachments/assets/526decc2-1e06-4e89-913f-c0b3a14c3187" />
+  <br>
+  <hr>
+</details>
+<details>
+  <summary><b>Bom</b></summary>
+  <br>
+  <b>📌 CreateBomTest</b> 
+  <br>
+  <img width="1918" height="867" alt="CreateBomTest" src="https://github.com/user-attachments/assets/60620d32-38d6-4446-adc4-1b1c8828cf92" />
+  <br>
+  <hr>
+</details>
+<details>
+  <summary><b>Client</b></summary>
+  <br>
+  <b>📌 ClientServiceImplTest</b> 
+  <br>
+  <img width="1918" height="868" alt="ClientServiceImplTest" src="https://github.com/user-attachments/assets/776c9225-ca28-4265-8094-1c39aecbd088" />
+  <br>
+  <hr>
+</details>
+<details>
+  <summary><b>Item</b></summary>
+  <br>
+  <b>📌 CreateItemTest</b> 
+  <br>
+  <img width="1918" height="867" alt="CreateItemTest" src="https://github.com/user-attachments/assets/73194969-10cc-4cb7-81f3-b1bad3848747" />
+  <br>
+  <hr>
+  <b>📌 SearchITemsTest</b> 
+  <br>
+  <img width="1918" height="867" alt="SearchITemsTest" src="https://github.com/user-attachments/assets/784e1174-bb27-420f-9761-8e2b8d9e3d0e" />
+  <br>
+  <hr>
+</details>
+<details>
+  <summary><b>Order</b></summary>
+  <br>
+  <b>📌 OrderServiceImplTest</b> 
+  <br>
+  <img width="1918" height="868" alt="OrderServiceImplTest" src="https://github.com/user-attachments/assets/8869bbf7-bd28-46aa-9a0d-a8b9f315a227" />
+  <br>
+  <hr>
+</details>
+<details>
+  <summary><b>Plan</b></summary>
+  <br>
+  <b>📌 CreatePlanTest</b> 
+  <br>
+  <img width="1918" height="868" alt="CreatePlanTest" src="https://github.com/user-attachments/assets/b1fa6937-2520-4229-8020-85cd71bff0b6" />
+  <br>
+  <hr>
+</details>
+<details>
+  <summary><b>Stock</b></summary>
+  <br>
+  <b>📌 RemoveStockTest</b> 
+  <br>
+  <img width="1918" height="870" alt="RemoveStockTest" src="https://github.com/user-attachments/assets/25fed28f-b99d-49f7-923c-aa3495b2ce3c" />
+  <br>
+  <hr>
+  <b>📌 RemoveStockTest_Standard output</b> 
+  <br>
+  <img width="1918" height="867" alt="RemoveStockTest_Standard output" src="https://github.com/user-attachments/assets/edf8d108-9004-44a8-85f6-49f1782c0e1f" />
+  <br>
+  <hr>
+</details>
+<details>
+  <summary><b>Warehouse</b></summary>
+  <br>
+  <b>📌 GetWarehouseTest</b> 
+  <br>
+  <img width="1918" height="867" alt="GetWarehouseTest" src="https://github.com/user-attachments/assets/097a85bc-3757-40b2-bb06-6bdf68ce5214" />
+  <br>
+  <hr>
+</details>
 <br>
