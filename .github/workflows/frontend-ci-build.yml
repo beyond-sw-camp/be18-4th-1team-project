@@ -1,4 +1,4 @@
-name: frontend-ci-build.yml
+name: frontend-ci-test-build.yml
 
 on:
   pull_request:

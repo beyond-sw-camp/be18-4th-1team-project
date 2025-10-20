@@ -1,9 +1,10 @@
-name: frontend-ci-push.yml
+name: frontend-ci-test-push.yml
 
 on:
   push:
     branches:
       - main
+      - bug/48-invalid-tag-tracking
 
 
 jobs:

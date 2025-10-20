@@ -3,7 +3,7 @@ name: frontend-cd.yml
 
 on:
   workflow_run:
-    workflows: ["frontend-ci-push.yml"]  # CI 워크플로 이름과 동일하게 써야 함
+    workflows: ["frontend-ci-test-push.yml"]  # CI 워크플로 이름과 동일하게 써야 함
     types:
       - completed                         # CI가 완료될 때
 
@@ -55,10 +55,16 @@ jobs:
           kubectl apply -f service.yaml -n $env:NAMESPACE
           kubectl apply -f deployment.yaml -n $env:NAMESPACE
 
+      - name: Log image version
+        shell: powershell
+        run: |
+          Write-Host "Deploying commit SHA: ${{ github.event.workflow_run.head_sha }}"
+
       - name: Update Deployment with new image
         shell: powershell
         run: |
-          $IMAGE_TAG = $env:GITHUB_SHA
+          # GitHub SHA 태그로 설정
+          $IMAGE_TAG = "${{ github.event.workflow_run.head_sha }}"
           $FULL_IMAGE = "$env:DOCKER_USER/$env:IMAGE_NAME" + ":" + "$IMAGE_TAG"
 
           Write-Host "Deploying image: $FULL_IMAGE"
