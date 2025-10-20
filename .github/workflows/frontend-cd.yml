@@ -1,4 +1,79 @@
+
 name: frontend-cd.yml
+
 on:
+  workflow_run:
+    workflows: ["frontend-ci-push.yml"]  # CI 워크플로 이름과 동일하게 써야 함
+    types:
+      - completed                         # CI가 완료될 때
 
 jobs:
+  deploy:
+    runs-on: [self-hosted]
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    name: "Deploy to Local Kubernetes"
+
+    env:
+      DOCKER_USER: ${{ secrets.FRONT_DOCKER_USERNAME }}
+      IMAGE_NAME: ${{ secrets.FRONT_IMAGE_NAME }}
+      NAMESPACE: "smerp"
+
+    steps:
+      - name: Create namespace if not exists
+        shell: powershell
+        run: |
+          $ns = $env:NAMESPACE
+          Write-Host "Checking if namespace '$ns' exists..."
+
+          $ErrorActionPreference = "SilentlyContinue"
+          $exists = kubectl get namespace $ns -o json
+
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "Namespace '$ns' not found. Creating..."
+            kubectl create namespace $ns
+          } else {
+            Write-Host "Namespace '$ns' already exists."
+          }
+
+          # 다시 오류 감지 모드 복원
+          $ErrorActionPreference = "Stop"
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check kubectl context
+        shell: powershell
+        run: |
+          kubectl config current-context
+          kubectl get nodes
+
+      - name: Apply Kubernetes manifests
+        shell: powershell
+        working-directory: ./frontend/smerp-client/k8s
+        run: |
+          kubectl apply -f service.yaml -n $env:NAMESPACE
+          kubectl apply -f deployment.yaml -n $env:NAMESPACE
+
+      - name: Update Deployment with new image
+        shell: powershell
+        run: |
+          $IMAGE_TAG = $env:GITHUB_SHA
+          $FULL_IMAGE = "$env:DOCKER_USER/$env:IMAGE_NAME" + ":" + "$IMAGE_TAG"
+
+          Write-Host "Deploying image: $FULL_IMAGE"
+          
+          kubectl set image deployment/smerp-frontend `
+            smerp-frontend=$FULL_IMAGE -n $env:NAMESPACE
+
+      - name: Wait for rollout to complete
+        shell: powershell
+        run: |
+          kubectl rollout status deployment/smerp-frontend `
+            -n $env:NAMESPACE --timeout=600s
+
+      - name: Check running pods and services
+        shell: powershell
+        run: |
+          kubectl get pods -n $env:NAMESPACE -o wide
+          kubectl get svc -n $env:NAMESPACE -o wide

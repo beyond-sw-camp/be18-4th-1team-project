@@ -32,4 +32,6 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
       @Param("itemId") Long itemId,
       @Param("warehouseId") Long warehouseId);
 
+  @Query("SELECT s FROM Stock s WHERE s.item.itemId = :itemId")
+  List<Stock> findAllByItemId(Long itemId);
 }

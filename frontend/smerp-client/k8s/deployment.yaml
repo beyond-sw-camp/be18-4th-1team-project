@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smerp-frontend
+  namespace: smerp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smerp-frontend
+  template:
+    metadata:
+      labels:
+        app: smerp-frontend
+    spec:
+      imagePullSecrets:
+        - name: regsecret
+      containers:
+        - name: smerp-frontend
+          image: promandu/smerp-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80

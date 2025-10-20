@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb
+#  namespace: smerp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+        - image: mariadb:10.7.1 # MariaDB 이미지
+          name: mariadb
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mariadb-data
+              mountPath: /var/lib/mysql #컨테이너 내부에서 저장하는 경로
+          env:
+            - name: MARIADB_ROOT_PASSWORD #이름 변경 X
+              valueFrom:
+                secretKeyRef:
+                  name: cluster-secret # Secret의 이름
+                  key: mariadb_root_password # Secret의 data에 들어간 key:value
+
+            - name: MARIADB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cluster-secret
+                  key: spring_datasource_username
+
+            - name: MARIADB_USER_PW
+              valueFrom:
+                secretKeyRef:
+                  name: cluster-secret
+                  key: spring_datasource_password
+
+      volumes:
+        - name: mariadb-data
+          persistentVolumeClaim:
+            claimName: mariadb-pvc
+#            emptyDir: {}

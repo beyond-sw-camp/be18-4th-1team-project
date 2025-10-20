@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+#  namespace: smerp
+spec: #deployment spec
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template: #pod template
+    metadata:
+      labels:
+        app: backend
+    spec: #pod spec
+      imagePullSecrets:
+        - name: regsecret
+      containers:
+        - name: backend
+          image: pcochoco1/backend:d9bbf604f203c9cd99ba3b7299a95d752fff6278
+          imagePullPolicy: Always
+          env:
+
+            - name: SERVER_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: cluster-secret
+                  key: server_port
+
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: cluster-secret
+                  key: spring_datasource_url
+
+            - name: SPRING_DATASOURCE_DRIVER
+              valueFrom:
+                secretKeyRef:
+                  name: cluster-secret
+                  key: spring_datasource_driver
+
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: cluster-secret
+                  key: spring_datasource_username
+
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cluster-secret
+                  key: spring_datasource_password
+
+            - name: ENCRYPT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cluster-secret
+                  key: encrypt_key
+
+            - name: ENCRYPT_SALT
+              valueFrom:
+                secretKeyRef:
+                  name: cluster-secret
+                  key: encrypt_salt
+
+            #build.gradle 내용이므로 동일하게 달리 적용해줘야할지 아니면 구별 없어도 될지
+            - name: QUERYDSLVERSION
+              valueFrom:
+                secretKeyRef:
+                  name: cluster-secret
+                  key: querydslversion
+
+
+#                  - name: MYSQL_PORT
+#                    valueFrom:
+#                      secretKeyRef:
+#                        name: backend-secret-local
+#                        key: mysql_port
+#
+#                  - name: MYSQL_DATABASE
+#                    valueFrom:
+#                      configMapKeyRef:
+#                        name: backend-secret-local
+#                        key: mysql_database
+
+
+      restartPolicy: Always
+

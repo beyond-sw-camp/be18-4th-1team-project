@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    default: dev
+
+  jpa:
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: ${SERVER_PORT}
+
+logging:
+  level:
+    org.springframework: INFO
+
+encrypt:
+  key: ${ENCRYPT_KEY}
+  salt: ${ENCRYPT_SALT}

@@ -38,11 +38,8 @@ out/
 ### VS Code ###
 .vscode/
 
-application.yml
-
 # MacOS
 .DS_Store
-
 
 # Gradle
 .gradle/
@@ -59,8 +56,7 @@ frontend/smerp-client/.vite/
 
 # Environment
 .env
-.env.local
-application-*.yml
+.env.*
 docs/secret.yaml
 
 # Logs & temp
