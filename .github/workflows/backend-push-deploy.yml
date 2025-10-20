@@ -63,7 +63,7 @@ jobs:
           ./gradlew build -PqueryDslVersion=${{ secrets.QUERYDSLVERSION }}
 
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -101,7 +101,7 @@ jobs:
 
   deploy:
 
-    runs-on: self-hosted
+    runs-on: [self-hosted, Windows, X64, c]
     needs: build-and-push
     steps:
     - name: Create namespace if not exists
