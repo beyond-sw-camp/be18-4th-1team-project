@@ -1,8 +1,3 @@
-# 📉 Project_SMERP
-
-# <img src="docs/팀 도미노.svg">
-
-
 ## ✨팀원✨
 <table style="width:100%;">
   <thead>
@@ -69,6 +64,12 @@
 16. 화면 및 기능 설계서
 17. UI/UX 단위 테스트 결과서(.gif)
 18. UI/UX 단위 테스트 결과서(스프레드시트)
+19. CI/CD 시스템 아키택처
+20. CI 단위테스트 결과
+21. CI/CD 예시
+22. CI/CD 파이프라인
+23. 트러블슈팅
+24. CI/CD 회고록
     <br>
 
 ## <a id="requirements"></a>1. 개요
@@ -848,5 +849,819 @@
 </details>
 <br>
 
+## <a id="requirements"></a>19. CI/CD 시스템 아키택처
+<details>
+  <img width="1600" height="1084" alt="Group 1 (1)" src="https://github.com/user-attachments/assets/c1b51627-04a3-4d0f-b07d-38cbdb45d854" />
 
+
+</details>
+
+## <a id="requirements"></a>20. CI 단위테스트 결과
+<details>
+  <summary><b>User</b></summary>
+  <br>
+  <b>📌 UserServiceImplSecurityTest</b> 
+  <br>
+  <img width="1918" height="867" alt="UserServiceImplSecurityTest" src="https://github.com/user-attachments/assets/ff488ca7-ff07-4f2b-82b0-47ba7524dc44" />
+  <hr>
+  <br>
+  <b>📌 UserServiceImplSecurityTest_Standard output</b> 
+  <br>
+  <img width="1487" height="141" alt="UserServiceImplSecurityTest_Standard output" src="https://github.com/user-attachments/assets/01fa192c-633f-45a9-901d-13c3cbad14b7" />
+  <br>
+  <hr>
+  <b>📌 CreateUserTest</b> 
+  <br>
+  <img width="1918" height="867" alt="CreateUserTest" src="https://github.com/user-attachments/assets/95f8802f-2bb4-487d-bde0-1fac60553d7f" />
+  <br>
+  <hr>
+  <b>📌 UpdateUserTest</b> 
+  <br>
+  <img width="1918" height="867" alt="UpdateUserTest" src="https://github.com/user-attachments/assets/526decc2-1e06-4e89-913f-c0b3a14c3187" />
+  <br>
+  <hr>
+</details>
+<details>
+  <summary><b>Bom</b></summary>
+  <br>
+  <b>📌 CreateBomTest</b> 
+  <br>
+  <img width="1918" height="867" alt="CreateBomTest" src="https://github.com/user-attachments/assets/60620d32-38d6-4446-adc4-1b1c8828cf92" />
+  <br>
+  <hr>
+</details>
+<details>
+  <summary><b>Client</b></summary>
+  <br>
+  <b>📌 ClientServiceImplTest</b> 
+  <br>
+  <img width="1918" height="868" alt="ClientServiceImplTest" src="https://github.com/user-attachments/assets/776c9225-ca28-4265-8094-1c39aecbd088" />
+  <br>
+  <hr>
+</details>
+<details>
+  <summary><b>Item</b></summary>
+  <br>
+  <b>📌 CreateItemTest</b> 
+  <br>
+  <img width="1918" height="867" alt="CreateItemTest" src="https://github.com/user-attachments/assets/73194969-10cc-4cb7-81f3-b1bad3848747" />
+  <br>
+  <hr>
+  <b>📌 SearchITemsTest</b> 
+  <br>
+  <img width="1918" height="867" alt="SearchITemsTest" src="https://github.com/user-attachments/assets/784e1174-bb27-420f-9761-8e2b8d9e3d0e" />
+  <br>
+  <hr>
+</details>
+<details>
+  <summary><b>Order</b></summary>
+  <br>
+  <b>📌 OrderServiceImplTest</b> 
+  <br>
+  <img width="1918" height="868" alt="OrderServiceImplTest" src="https://github.com/user-attachments/assets/8869bbf7-bd28-46aa-9a0d-a8b9f315a227" />
+  <br>
+  <hr>
+</details>
+<details>
+  <summary><b>Plan</b></summary>
+  <br>
+  <b>📌 CreatePlanTest</b> 
+  <br>
+  <img width="1918" height="868" alt="CreatePlanTest" src="https://github.com/user-attachments/assets/b1fa6937-2520-4229-8020-85cd71bff0b6" />
+  <br>
+  <hr>
+</details>
+<details>
+  <summary><b>Stock</b></summary>
+  <br>
+  <b>📌 RemoveStockTest</b> 
+  <br>
+  <img width="1918" height="870" alt="RemoveStockTest" src="https://github.com/user-attachments/assets/25fed28f-b99d-49f7-923c-aa3495b2ce3c" />
+  <br>
+  <hr>
+  <b>📌 RemoveStockTest_Standard output</b> 
+  <br>
+  <img width="1918" height="867" alt="RemoveStockTest_Standard output" src="https://github.com/user-attachments/assets/edf8d108-9004-44a8-85f6-49f1782c0e1f" />
+  <br>
+  <hr>
+</details>
+<details>
+  <summary><b>Warehouse</b></summary>
+  <br>
+  <b>📌 GetWarehouseTest</b> 
+  <br>
+  <img width="1918" height="867" alt="GetWarehouseTest" src="https://github.com/user-attachments/assets/097a85bc-3757-40b2-bb06-6bdf68ce5214" />
+  <br>
+  <hr>
+</details>
 <br>
+
+## <a id="requirements"></a>21. CI/CD 예시
+
+<details>
+  <summary><b>Backend</b></summary>
+  <br>
+  ci 유튜브 링크 : https://youtu.be/w86Egdabwm8
+  <br>
+  <br>
+  cicd 유튜브 링크 : https://youtu.be/35PrVQr4JnY
+</details>
+
+<details>
+  <summary><b>Frontend</b></summary>
+  <br>
+  유튜브 링크 : https://youtu.be/zuKj8JPYudI
+</details>
+
+
+## <a id="requirements"></a>22. CI/CD 파이프라인
+
+<details>
+    <summary><span style="font-weight:600;">📜 Backend Workflow</span></summary>
+
+  ```
+name: backend-ci-build.yml
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    permissions:
+      write-all
+
+    services:
+      mariadb:
+        image: mariadb:11.8.2
+        env:
+          MYSQL_DATABASE: ${{ secrets.DATABASE }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
+          MYSQL_USER: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+          MYSQL_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+          MYSQL_ROOT_HOST: '%'
+        ports:
+          - 3306:3306
+        options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Make gradlew executable
+        run: chmod +x ./backend/smerp/gradlew
+
+      #컴파일(테스트 포함)
+      - name: Build application
+        working-directory: ./backend/smerp
+        #build, test용 가짜 환경변수
+        env:
+          MYSQL_HOST: mariadb
+          MYSQL_PORT: ${{ secrets.DB_PORT }}
+          MYSQL_DATABASE: ${{ secrets.DATABASE }}
+          SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+          SPRING_DATASOURCE_DRIVER: ${{ secrets.SPRING_DATASOURCE_DRIVER }}
+          SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3306/${{ secrets.DATABASE }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
+          ENCRYPT_SALT: ${{ secrets.ENCRYPT_SALT }}
+
+        run: |
+          echo "building application"
+          ./gradlew build -PqueryDslVersion=${{ secrets.QUERYDSLVERSION }}
+```
+
+```
+name: backend-push-deploy.yml
+
+on:
+  push:
+    branches:
+      - main
+#      - feature/30-backend-cd
+
+jobs:
+  build-and-push:
+    name: Build & Push image
+    runs-on: ubuntu-latest
+
+    permissions:
+      write-all
+
+    services:
+      mariadb:
+        image: mariadb:11.8.2
+        env:
+          MYSQL_DATABASE: ${{ secrets.DATABASE }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
+          MYSQL_USER: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+          MYSQL_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+          MYSQL_ROOT_HOST: '%'
+
+        ports:
+          - 3306:3306
+        options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Make gradlew executable
+        run: chmod +x ./backend/smerp/gradlew
+
+      #컴파일(테스트 포함)
+      - name: Build application
+        working-directory: backend/smerp
+
+        env:
+          MYSQL_HOST: mariadb
+          MYSQL_PORT: ${{ secrets.DB_PORT }}
+          MYSQL_DATABASE: ${{ secrets.DATABASE }}
+          SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+          SPRING_DATASOURCE_DRIVER: ${{ secrets.SPRING_DATASOURCE_DRIVER }}
+          SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3306/${{ secrets.DATABASE }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
+          ENCRYPT_SALT: ${{ secrets.ENCRYPT_SALT }}
+
+
+        run: |
+          echo "building application"
+          ./gradlew build -PqueryDslVersion=${{ secrets.QUERYDSLVERSION }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Registry
+        uses: docker/login-action@v2
+        with:
+          #access key, secret key
+          username: ${{ secrets.BACK_DOCKER_USERNAME }}
+          password: ${{ secrets.BACK_DOCKER_PASSWORD }}
+
+#      - name: Login to GitHub Container Registry
+#        uses: docker/login-action@v2
+#        with:
+#          registry: ghcr.io
+#          username: ${{ secrets.BACK_DOCKER_USERNAME }}   # GitHub 계정명
+#          password: ${{ secrets.BACK_GHCR_PASSWORD }}
+
+      - name: Set IMAGE_TAG for later jobs
+        run: echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
+
+      - name: Build and push docker image
+        env:
+          DOCKER_USERNAME: ${{ secrets.BACK_DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.BACK_DOCKER_PASSWORD }}
+          IMG_NAME: ${{ secrets.BACK_IMAGE_NAME }}
+          QUERYDSLVERSION: ${{ secrets.QUERYDSLVERSION }}
+        run: |
+          docker build \
+            -f backend/smerp/Dockerfile \
+            --build-arg QUERYDSLVERSION=$QUERYDSLVERSION \
+            -t $DOCKER_USERNAME/$IMG_NAME:$IMAGE_TAG .
+          docker push $DOCKER_USERNAME/$IMG_NAME:$IMAGE_TAG
+          
+          #          docker build \
+          #            -f backend/smerp/Dockerfile \
+          #            --build-arg QUERYDSLVERSION=$QUERYDSLVERSION \
+          #            -t $DOCKER_USERNAME/$IMG_NAME:$IMAGE_TAG .
+          #          docker push $DOCKER_USERNAME/$IMG_NAME:latest
+
+
+
+  deploy:
+
+    runs-on: [self-hosted, Windows, X64, c]
+    needs: build-and-push
+    steps:
+    - name: Create namespace if not exists
+      env:
+        DOCKER_USER: ${{ secrets.BACK_DOCKER_USERNAME }}
+        IMG_NAME: ${{ secrets.BACK_IMAGE_NAME }}
+        NAMESPACE: "smerp"
+      shell: powershell
+      run: |
+        $ns = $env:NAMESPACE
+        Write-Host "Checking if namespace '$ns' exists..."
+
+        $ErrorActionPreference = "SilentlyContinue"
+        $exists = kubectl get namespace $ns -o json
+
+        if ($LASTEXITCODE -ne 0) {
+          Write-Host "Namespace '$ns' not found. Creating..."
+          kubectl create namespace $ns
+        } else {
+          Write-Host "Namespace '$ns' already exists."
+        }
+
+        $ErrorActionPreference = "Stop"
+
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Checkout kubectl context
+      run: |
+        echo "Checking current context"
+        kubectl config current-context
+        kubectl get nodes
+
+    - name: Create k8s secret.yaml
+      env:
+        SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
+        SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+        SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+        SPRING_DATASOURCE_DRIVER: ${{ secrets.SPRING_DATASOURCE_DRIVER }}
+        SERVER_PORT: ${{ secrets.SERVER_PORT }}
+        ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
+        ENCRYPT_SALT: ${{ secrets.ENCRYPT_SALT }}
+        QUERYDSLVERSION: ${{ secrets.QUERYDSLVERSION }}
+        MARIADB_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
+        MARIADB_USER: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+        MARIADB_USER_PW: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+
+      run: |
+        kubectl create secret generic cluster-secret --from-literal=spring_datasource_url=$env:SPRING_DATASOURCE_URL --from-literal=spring_datasource_username=$env:SPRING_DATASOURCE_USERNAME --from-literal=spring_datasource_password=$env:SPRING_DATASOURCE_PASSWORD --from-literal=spring_datasource_driver=$env:SPRING_DATASOURCE_DRIVER --from-literal=server_port=$env:SERVER_PORT --from-literal=encrypt_key=$env:ENCRYPT_KEY --from-literal=encrypt_salt=$env:ENCRYPT_SALT --from-literal=querydslversion=$env:QUERYDSLVERSION --from-literal=mariadb_root_password=$env:MARIADB_ROOT_PASSWORD --from-literal=mariadb_user=$env:MARIADB_USER --from-literal=mariadb_user_pw=$env:MARIADB_USER_PW --dry-run=client -o yaml | kubectl apply -f - -n smerp
+
+    - name: Apply k8s db resources
+      env:
+        NAMESPACE: "smerp"
+      shell: powershell
+      working-directory: ./backend/smerp/k8s/db
+      run: |
+        echo "Deploying db"
+        kubectl apply -f pv.yaml -n $env:NAMESPACE 
+        kubectl apply -f pvc.yaml -n $env:NAMESPACE 
+        kubectl apply -f deployment.yaml -n $env:NAMESPACE
+        kubectl apply -f service.yaml -n $env:NAMESPACE
+        
+        echo "manifests applied"
+
+    - name: Initialize MariaDB
+      env:
+        NAMESPACE: "smerp"
+        MARIADB_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
+        MARIADB_USER: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+        MARIADB_USER_PW: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+        MARIA_DATABASE: ${{ secrets.DATABASE }}
+
+      shell: powershell
+      run: |
+        kubectl wait --for=condition=ready pod -l app=mariadb -n $env:NAMESPACE --timeout=120s
+        Start-Sleep -Seconds 5
+        
+        $DB_POD = kubectl get pods -n $env:NAMESPACE -l app=mariadb -o jsonpath='{.items[0].metadata.name}'
+        
+        $sql = "CREATE DATABASE IF NOT EXISTS $($env:MARIA_DATABASE);
+        CREATE USER IF NOT EXISTS '$($env:MARIADB_USER)'@'%' IDENTIFIED BY '$($env:MARIADB_USER_PW)';
+        GRANT ALL PRIVILEGES ON $($env:MARIA_DATABASE).* TO '$($env:MARIADB_USER)'@'%';
+        FLUSH PRIVILEGES;
+        "
+        kubectl exec -i $DB_POD -n $env:NAMESPACE -- mariadb -h 127.0.0.1 -u root -p"$($env:MARIADB_ROOT_PASSWORD)" -e "$sql"
+
+    - name: deploy backend
+      env:
+        NAMESPACE: "smerp"
+      shell: powershell
+      working-directory: ./backend/smerp/k8s
+      run: |
+        echo "Deploying backend"
+        
+        kubectl apply -f deployment.yaml -n $env:NAMESPACE
+        kubectl apply -f service.yaml -n $env:NAMESPACE
+        
+        echo "manifests applied"
+
+
+    - name: Update Deployment with new image
+      env:
+        NAMESPACE: "smerp"
+        DOCKER_USER: ${{ secrets.BACK_DOCKER_USERNAME }}
+        IMG_NAME: ${{ secrets.BACK_IMAGE_NAME }}
+      shell: powershell
+      run: |
+        $IMG_TAG = $env:GITHUB_SHA
+
+        $FULL_IMAGE = "$env:DOCKER_USER/$env:IMG_NAME" + ":" + "$IMG_TAG"
+
+        Write-Host "Deploying image: $FULL_IMAGE"
+        
+        kubectl set image deployment/backend backend=$FULL_IMAGE -n $env:NAMESPACE
+
+      #        $FULL_IMAGE = "$env:DOCKER_USER/$env:IMG_NAME" + ":" + "$IMG_TAG"
+
+    - name: Wait for rollout to complete
+      env:
+        NAMESPACE: "smerp"
+      shell: powershell
+      run: |
+        kubectl rollout status deployment/backend -n $env:NAMESPACE --timeout=600s
+
+    - name: Check running pods and services
+      env:
+        NAMESPACE: "smerp"
+      shell: powershell
+      run: |
+        kubectl get pods -n $env:NAMESPACE -o wide
+        kubectl get svc -n $env:NAMESPACE -o wide
+```
+
+</details>
+
+
+<details>
+  <summary><span style="font-weight:600;">📜 Frontend Workflow</span></summary>
+
+  ```
+name: frontend-ci-build.yml
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    permissions:
+      write-all
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js (v20)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: ./frontend/smerp-client
+        run: npm ci
+
+      - name: Build Vue application
+        working-directory: ./frontend/smerp-client
+        run: npm run build
+
+  ```
+
+  ```
+  name: frontend-ci-push.yml
+
+  on:
+    push:
+      branches:
+        - main
+        - develop
+  
+  jobs:
+    build:
+      name: Build & Push Frontend Image
+      runs-on: ubuntu-latest
+  
+      permissions:
+        write-all
+  
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+  
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: 20
+  
+        - name: Install dependencies
+          working-directory: frontend/smerp-client
+          run: npm ci
+  
+        - name: Build Vue app
+          working-directory: frontend/smerp-client
+          run: npm run build
+  
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v2
+  
+        - name: Login to Docker Registry
+          uses: docker/login-action@v2
+          with:
+            username: ${{ secrets.FRONT_DOCKER_USERNAME }}
+            password: ${{ secrets.FRONT_DOCKER_PASSWORD }}
+  
+        - name: Set IMAGE_TAG for later jobs
+          run: echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
+  
+        - name: Build and push docker image
+          env:
+            FRONT_DOCKER_USERNAME: ${{ secrets.FRONT_DOCKER_USERNAME }}
+            FRONT_DOCKER_PASSWORD: ${{ secrets.FRONT_DOCKER_PASSWORD }}
+            FRONT_IMAGE_NAME: ${{ secrets.FRONT_IMAGE_NAME  }}
+          run: |
+            docker build \
+              -f frontend/smerp-client/Dockerfile \
+              -t $FRONT_DOCKER_USERNAME/$FRONT_IMAGE_NAME:$IMAGE_TAG \
+              ./frontend/smerp-client
+            docker push $FRONT_DOCKER_USERNAME/$FRONT_IMAGE_NAME:$IMAGE_TAG
+            docker tag $FRONT_DOCKER_USERNAME/$FRONT_IMAGE_NAME:$IMAGE_TAG $FRONT_DOCKER_USERNAME/$FRONT_IMAGE_NAME:latest
+            docker push $FRONT_DOCKER_USERNAME/$FRONT_IMAGE_NAME:latest
+``` 
+
+```
+
+name: frontend-cd.yml
+
+on:
+  workflow_run:
+    workflows: ["frontend-ci-push.yml"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, Windows, X64, local-dev]  # 내 로컬 러너 한정
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: "Deploy to Local Kubernetes"
+
+    env:
+      DOCKER_USER: ${{ secrets.FRONT_DOCKER_USERNAME }}
+      IMAGE_NAME: ${{ secrets.FRONT_IMAGE_NAME }}
+      NAMESPACE: "smerp"
+      IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
+
+    steps:
+      - name: Create namespace if not exists
+        shell: powershell
+        run: |
+          $ns = $env:NAMESPACE
+          Write-Host "Checking if namespace '$ns' exists..."
+
+          $ErrorActionPreference = "SilentlyContinue"
+          $exists = kubectl get namespace $ns -o json
+
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "Namespace '$ns' not found. Creating..."
+            kubectl create namespace $ns
+          } else {
+            Write-Host "Namespace '$ns' already exists."
+          }
+
+          # 다시 오류 감지 모드 복원
+          $ErrorActionPreference = "Stop"
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check kubectl context
+        shell: powershell
+        run: |
+          kubectl config current-context
+          kubectl get nodes
+
+      - name: Apply Kubernetes manifests
+        shell: powershell
+        working-directory: ./frontend/smerp-client/k8s
+        run: |
+          kubectl apply -f service.yaml -n $env:NAMESPACE
+          kubectl apply -f deployment.yaml -n $env:NAMESPACE
+
+      - name: Log image version
+        shell: powershell
+        run: |
+          Write-Host "Deploying commit SHA: ${{ github.event.workflow_run.head_sha }}"
+
+      - name: Update Deployment with new image
+        shell: powershell
+        run: |
+          $FULL_IMAGE = $env:DOCKER_USER + "/" + $env:IMAGE_NAME + ":" + $env:IMAGE_TAG
+          Write-Host "Deploying image: $FULL_IMAGE"
+          kubectl set image deployment/smerp-frontend `
+            smerp-frontend=$FULL_IMAGE -n $env:NAMESPACE
+
+      - name: Wait for rollout to complete
+        shell: powershell
+        run: |
+          kubectl rollout status deployment/smerp-frontend `
+            -n $env:NAMESPACE --timeout=600s
+
+      - name: Check running pods and services
+        shell: powershell
+        run: |
+          kubectl get pods -n $env:NAMESPACE -o wide
+          kubectl get svc -n $env:NAMESPACE -o wide
+```
+</details>
+
+<details>
+  <summary><span style="font-weight:600;">Backend</span></summary>
+  
+  ## 1️⃣ 전체 동작 흐름 <br>
+  
+  1. 개발자가 로컬 환경에서 코드를 수정한 뒤, 변경 사항을 **develop**, **main** 브랜치로 Pull Request 요청 시 **CI-Build**가 자동 실행된다. <br><br>
+  2. **main 브랜치로 push 시**, **CI/CD(자동 배포)** 단계가 실행된다. <br>
+
+  ## 2️⃣ 세부 동작 과정 <br>
+
+  <h3>🧩 CI-Build 단계 (사전 검증)</h3>
+  
+    1. 테스트 DB 생성  
+       - 테스트용 데이터베이스 환경을 준비한다.
+       
+    2. 코드 체크아웃 (Checkout code)  
+       - 저장소의 최신 커밋을 Runner 환경으로 가져온다. 
+
+    3. JDK 환경 설정  
+       - JDK 21 버전을 설치하고 실행 환경을 구성한다.
+
+    4. 애플리케이션 빌드 (Build application)  
+       - `gradlew build` 명령어를 실행하여 애플리케이션을 빌드한다.
+
+  <h3>🚀 CI/CD - Push 단계 (실제 배포용)</h3>
+  
+    1 ~ 4. CI-Build 단계와 동일하게 실행된다.
+
+    5. Docker 빌드 도구 세팅 및 로그인  
+       - `docker/setup-buildx-action`으로 Docker 빌드 도구를 준비한다.  
+       - GitHub Secrets에 저장된 Docker Hub 계정 정보를 사용하여 로그인한다.
+
+    6. Docker 이미지 빌드 및 푸시  
+       - `Dockerfile`을 이용해 이미지를 생성한다.  
+       - `username/image:commit_sha` 형태의 이미지를 업로드한다.  
+       - 참고로 `latest` 태그도 함께 업로드한다. (로컬 테스트 또는 수동 배포용)
+
+  <h3>🧭 CD 단계 - DB</h3>
+
+    1. Self-hosted Runner (로컬 Windows 환경)  
+       - Jenkins 대신 GitHub Actions를 사용하여 로컬 환경에서 파이프라인을 실행한다.
+
+    2. Namespace 확인 및 생성  
+       - `smerp` 네임스페이스가 존재하지 않으면 자동으로 생성된다.
+
+    3. secret.yaml 생성  
+       - GitHub Secrets의 환경 변수를 적용하여 secret.yaml 파일을 동적으로 작성한다.
+
+    4. Kubernetes Context 확인  
+       - 현재 클러스터 연결 상태 및 노드 정보를 출력하여 환경을 확인한다.
+
+    5. Kubernetes DB Manifest 적용  
+       - `backend/k8s` 내 DB 관련 manifest 파일(pv, pvc 등)을 `kubectl apply`로 적용한다.  
+       - PersistentVolume 및 PersistentVolumeClaim을 통해 데이터 저장 구조를 구성한다.
+
+    6. DB 초기화  
+       - 생성된 Pod 내에서 초기 스크립트를 실행하여 데이터베이스, 계정, 권한을 생성 및 적용한다.
+
+  <h3>🧭 CD 단계 - Backend 코드</h3>
+
+    1. Kubernetes Manifest 적용  
+       - `backend/k8s` 경로의 `service.yaml`, `deployment.yaml`을 `kubectl apply`로 적용한다.
+
+    2. 배포 이미지 업데이트  
+       - 새로 빌드된 Docker 이미지의 SHA 태그를 사용해 Deployment의 컨테이너 이미지를 업데이트한다.
+
+    3. 롤아웃 상태 확인  
+       - 새 파드가 정상적으로 배포되고 Ready 상태로 전환될 때까지 대기한다.
+
+    4. 배포 결과 확인  
+       - 실행 중인 Pod와 Service 목록을 출력하여 정상 배포 여부를 확인한다.
+
+  ## 3️⃣ 결과 <br>
+
+  - 코드 푸시만으로 **자동 빌드 → DB 초기화 → 백엔드 배포**까지 이어지는 완전 자동화 파이프라인 구현.
+    
+  - 커밋 기반 이미지 태그(`commit_sha`)를 사용해 **정확한 버전 추적 및 롤백 가능성 확보**.
+    
+  - 로컬 Windows 환경에서도 Jenkins 없이 GitHub Actions로 **완전 자동화된 배포 실현**.
+  
+</details>
+
+<details>
+  <summary><span style="font-weight:600;">Frontend</span></summary>
+  
+  ## 1️⃣ 전체 동작 흐름 <br>
+  
+  1. 개발자가 로컬 환경에서 코드를 수정한 뒤, 변경 사항을 develop 브랜치로 Pull Request 요청 시 CI-Build가 자동 실행된다. <br><br>
+  2. CI-Build가 정상적으로 완료되고 코드 리뷰 후 develop에 머지되면 CI-Push가 실행된다. <br><br>
+  3. CI-Push가 오류 없이 완료되면, workflow_run 이벤트를 통해 자동으로 CD(배포) 단계가 실행된다. <br>
+
+  ## 2️⃣ 세부 동작 과정 <br>
+
+  <h3>🧩 CI-Build 단계 (사전 검증)</h3>
+  
+    1. 코드 체크아웃
+       - 저장소의 최신 커밋을 Runner 환경으로 가져온다.
+         
+    2. Node.js 환경 설정
+       - Node.js 20 버전을 설치하고 실행 환경을 구성한다.
+         
+    3. 의존성 설치 (Install dependencies)
+       - npm ci 명령으로 frontend/smerp-client 내 패키지를 설치한다.
+      
+    4. Vue 애플리케이션 빌드 (npm run build)
+       - 정적 리소스를 빌드해 배포 가능한 상태로 생성한다.
+    
+  <h3>🚀 CI-Push 단계 (실제 배포용)</h3>
+  
+    1 ~ 4. CI-Build 단계와 동일하게 실행횐다.
+
+    5. Docker 빌드 도구 세팅 및 로그인
+       - docker/setup-buildx-action으로 Docker 빌드 도구를 준비한다.
+       - GitHub Secrets에 저장된 Docker Hub 계정 정보를 사용하여 로그인한다.
+       
+    6. Docker 이미지 빌드 및 푸시
+       - Dockerfile을 이용해 이미지를 생성한다.
+       - username/image:commit_sha 형태의 이미지를 업로드한다.
+       - 참고용으로 latest 태그도 함께 업로드한다. (로컬 테스트 또는 수동 배포용)
+
+  <h3>🧭 CD 단계 (자동 배포)</h3>
+
+    1. Self-hosted Runner (로컬 환경)
+       - Jenkins 대신 GitHub Actions를 사용하여 파이프라인을 자동화하였으며, 사용자의 로컬 쿠버네티스 개발 환경에서 실행된다.
+       
+    2. Namespace 확인 및 생성
+       - smerp 네임스페이스가 존재하지 않으면 자동으로 생성된다.
+         
+    3. Kubernetes Context 확인
+       - 현재 클러스터 연결 상태 및 노드 정보를 출력해 환경을 확인한다.
+         
+    4. Kubernetes Manifest 적용
+       - frontend/smerp-client/k8s 경로의 service.yaml, deployment.yaml을 kubectl apply로 적용한다.
+  
+    5. 배포 이미지 업데이트
+       - 새로 빌드된 Docker 이미지의 SHA 태그를 사용해 기존 smerp-frontend Deployment의 컨테이너 이미지를 업데이트한다.
+      
+    6. 롤아웃 상태 확인
+       - 새 파드가 정상적으로 배포되고 Ready 상태로 전환될 때까지 대기한다.
+      
+    7. 배포 결과 확인
+       - 실행 중인 Pod와 Service 목록을 출력하여 정상 배포 여부를 확인한다.
+
+  ## 3️⃣ 결과 <br>
+
+  - 코드 푸시만으로 자동 빌드 및 쿠버네티스 배포까지 이어지는 완전 자동화 CI/CD 파이프라인 구현.
+    
+  - 커밋 기반 이미지 태그(commit_sha)를 사용해 정확한 버전 추적 및 롤백 가능성 확보.
+
+  - 로컬 환경에서도 Jenkins 없이 GitHub Actions로 배포 자동화 실현.
+
+</details>
+
+## <a id="requirements"></a>23. 트러블 슈팅
+<details>
+    <summary><span style="font-weight:600;">Frontend</span></summary>
+  <h3>문제 상황</h3> 
+- 프론트엔드 CI/CD 파이프라인 중 front-cd.yml에서 배포 단계 실행 시, kube set image 명령에 사용되는 이미지 태그가 비어있는 문제가 발생 <br>
+- $env:IMAGE_TAG 로 지정된 값이 비어 있어 최종 $FULL_IMAGE 값이 정상적으로 구성되지 않음. <br>
+- 로그 상에서는 ${{ github.sha }} 또는 ${{ env.GITHUB_SHA }} 값이 비어 있었음. <br>
+
+<h3>원인 분석</h3> 
+- 초기에는 frontend-cd.yml의 테스트를 위해 트리거를 push 이벤트로 설정했었음. 이 경우에는 GITHUB_SHA가 현재 워크플로우의 커밋 SHA로 자동 주입되어 정상 동작함 <br>
+- 그러나 이후 트리거를 workflow_run으로 변경 시 문제 발생 <br>
+- workflow_run 이벤트에서는 현재 실행 중인 워크플로우의 github.sha가 아니라 상위 워크플로우(CI)의 SHA 값을 참조해야함. 즉, ${{ github.event.workflow_run.head_sha }} 를 사용해야 정확히 연결됨 <br>
+
+<h3>해결 방법</h3>
+- env에 이미지태그를 상위 워크플로우의 SHA 값을 주어 해결. IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
+
+<h3>결과</h3>
+- frontend-cd.yml에서 $FULL_IMAGE가 정상적으로 ${DOCKER_USER}/${IMAGE_NAME}:${commit_sha} 형식으로 생성 됨
+- CD 파이프라인이 CI 결과와 동일한 커밋의 이미지를 배포하도록 구현
+- kubectl set image 시 이미지 태그명 불일치 문제 해결
+</details>
+
+
+
+
+## <a id="requirements"></a>24. CI/CD 회고록
+| 이름                                    | 회고 내용                                           |
+|--------------|-----------------------------------------------------------------------------------------------------------------|
+|      최정필        | 팀장으로 진행한 첫 프로젝트였는데 팀원분들이 잘 따라와주셔서 좋았습니다. 그러나 CICD프로젝트를 진행하며 알아야 할 개념이 매우 많아 왜 DevOps 엔지니어가 연봉을 많이 받는지도 직접 겪게 되었습니다. 이번에 Github Actions를 시작으로 차근차근 AWS도 배우고 싶네요.    |
+|      박채연        | cicd 라는 개념이 잘 와닿지는 않았었는데 총 과정을 진행해보면서 코드 자동화와 배포라는 작업은 코드 자체보다 많은 외부 요소에 대한 관리와 개입이 필요함을 알게 되었습니다. 특히 로컬 환경을 활용하는 점에서 db에 대한 구성방법과 같이 고민점들이 있어 흥미로웠고, 운영체제별 명령어의 차이 등을 생각해 좀 더 완성도있게 보완해보고 싶습니다.             |
+|      김민준        | CI/CD를 직접 구현하면서 각 구성 요소의 동작 방식을 이해하고, Kubernetes, Docker, GitHub Actions를 직접 활용해볼 수 있어 좋은 경험이 되었습니다. 짧은 프로젝트 기간 동안에는 로컬 환경에 self-hosted runner를 두고 배포를 진행했지만, 추후에는 AWS 등의 클라우드 인프라를 활용하여 실제 운영 환경과 유사하게 구성하고, Docker Hub 및 GitHub Secrets 등 민감 정보 관리와 접근 제어를 강화하여 보다 안전하고 신뢰성 있는 배포 파이프라인을 구현해보고 싶습니다.      |
+|      윤동기        | 이번 프로젝트는 gitHub Actions와 Kubernetes를 활용한 CI/CD 자동화 및 무중단 배포 시스템 구축을 목표로 진행했습니다. GitHub Actions를 통해 코드를 푸시하면 자동으로 빌드, Docker 이미지 생성, Kubernetes 배포까지 이루어지도록 만들었으며, Kubernetes의 Rolling Update 전략을 구현해서 기존 서비스 중단 없이 새로운 버전이 점진적으로 교체되도록 구현했습니다. 처음 CI/CD를 배울 때 Docker, Kubernetes를 이해하는데 많은 시간이 걸렸고 개념도 정말 어려웠지만 팀원들과 상의하고 물어보고 하는 과정에서 많이 배웠습니다. 그 이후 같이 트래픽 라우팅을 구성하면서 실제 서비스 배포 구조와 네트워크 흐름을 명확히 이해할 수 있었습니다. CI/CD 파이프라인 구축과 무중단 배포 경험을 통해 DevOps의 핵심 가치인 개발자가 안심하고 배포할 수 있는 자동화된 환경이 얼마나 중요한지 다시 한번 느끼게 되는 프로젝트였습니다.    |
+
