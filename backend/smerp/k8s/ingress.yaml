@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: smerp.beyond.com
+    - host: smerp.backend.com
       http:
         paths:
           - path: "/"
@@ -17,3 +17,13 @@ spec:
                 name: backend
                 port:
                   number: 8080
+    - host: smerp.frontend.com
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: smerp-frontend-service
+                port:
+                  number: 80
