@@ -17,37 +17,41 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
           args: |
-            **${{ github.repository }} 알림**
+            **📢 ${{ github.repository }} 알림**
             
             작업자: ${{ github.actor }}
-            이벤트: ${{ github.event_name }}
+            이벤트: **${{ github.event_name }}**
             
             ${{ 
-              # PUSH 이벤트 처리
+              # 1. PUSH
               github.event_name == 'push' && 
               format('브랜치: [{0}](https://github.com/{1}/tree/{0})\n커밋: [{2}](https://github.com/{1}/commit/{2})', 
                 github.ref_name, 
                 github.repository, 
                 github.sha
-              ) ||
-            
-              # PULL REQUEST 이벤트 처리
+              )
+            }}
+            ${{ 
+              # 2. PULL REQUEST
               github.event_name == 'pull_request' && 
               format('PR 제목: [{0}]({1})\nPR 번호: #{2}', 
                 github.event.pull_request.title, 
                 github.event.pull_request.html_url, 
                 github.event.pull_request.number
-              ) ||
-            
-              # ISSUES 이벤트 처리
+              )
+            }}
+            ${{ 
+              # 3. ISSUES
               github.event_name == 'issues' && 
               format('이슈: [{0}]({1})', 
                 github.event.issue.title, 
                 github.event.issue.html_url
-              ) ||
-            
-              # 기타 이벤트 처리
-              format('브랜치: {0}', github.ref_name) 
+              )
+            }}
+            ${{ 
+              # 4. 기타 이벤트 메시지
+              !contains(fromJSON('["push", "pull_request", "issues"]'), github.event_name) &&
+              format('브랜치: {0}', github.ref_name)
             }}
             
             GitHub Actions 실행 링크: [클릭하여 이동](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
