@@ -12,10 +12,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send Discord Notification
-        uses: Ilshidur/action-discord@master
+        uses: Ilshidur/action-discord@v0.4.0
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          args: '${{ github.actor }}님이 ${{ github.repository }} 저장소의 `${{ github.ref_name }}` 브랜치에서 ${{ github.event_name }}하였습니다.'
-          
-
+          args: |
+            **${{ github.repository }} 알림**
+            
+            작업자: ${{ github.actor }}
+            이벤트: ${{ github.event_name }}
+            
+            ${{ 
+              github.event_name == 'push' && 
+              format('브랜치: [{}](https://github.com/{}/tree/{})\n커밋: [{}]({})', github.ref_name, github.repository, github.ref_name, github.sha, format('https://github.com/{}/commit/{}', github.repository, github.sha)) ||
+            
+              github.event_name == 'pull_request' && 
+              format('PR 제목: [{}]({})\nPR 번호: #{}', github.event.pull_request.title, github.event.pull_request.html_url, github.event.pull_request.number) ||
+            
+              github.event_name == 'issues' && 
+              format('이슈: [{}]({})', github.event.issue.title, github.event.issue.html_url) ||
+            
+              format('브랜치: {}', github.ref_name) 
+            }}
+            
+            GitHub Actions 실행 링크: [클릭하여 이동](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
