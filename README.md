@@ -845,11 +845,12 @@
 
 ## <a id="requirements"></a>19. CI/CD 시스템 아키택처
 <details>
-  <img width="1600" height="1084" alt="Group 1" src="https://github.com/user-attachments/assets/8120c15a-47cd-4c3b-836e-2a55195707b0" />
+  <img width="1600" height="1084" alt="Group 1 (1)" src="https://github.com/user-attachments/assets/c1b51627-04a3-4d0f-b07d-38cbdb45d854" />
+
 
 </details>
 
-## <a id="requirements"></a>20. CI/CD 
+## <a id="requirements"></a>20. CI 단위테스트 결과
 <details>
   <summary><b>User</b></summary>
   <br>
@@ -964,7 +965,7 @@
   cicd 유튜브 링크 : https://youtu.be/35PrVQr4JnY
 </details>
 
-## <a id="requirements"></a>22. CI/CD 
+## <a id="requirements"></a>22. CI/CD 파이프라인
 
 
 
