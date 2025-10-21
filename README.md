@@ -68,7 +68,8 @@
 20. CI 단위테스트 결과
 21. CI/CD 예시
 22. CI/CD 파이프라인
-23. CI/CD 회고록
+23. 트러블슈팅
+24. CI/CD 회고록
     <br>
 
 ## <a id="requirements"></a>1. 개요
@@ -956,11 +957,7 @@
 <br>
 
 ## <a id="requirements"></a>21. CI/CD 예시
-<details>
-  <summary><b>Frontend</b></summary>
-  <br>
-  유튜브 링크 : https://youtu.be/zuKj8JPYudI
-</details>
+
 <details>
   <summary><b>Backend</b></summary>
   <br>
@@ -969,6 +966,13 @@
   <br>
   cicd 유튜브 링크 : https://youtu.be/35PrVQr4JnY
 </details>
+
+<details>
+  <summary><b>Frontend</b></summary>
+  <br>
+  유튜브 링크 : https://youtu.be/zuKj8JPYudI
+</details>
+
 
 ## <a id="requirements"></a>22. CI/CD 파이프라인
 
@@ -1628,12 +1632,32 @@ jobs:
 
 </details>
 
+## <a id="requirements"></a>23. 트러블 슈팅
+<details>
+    <summary><span style="font-weight:600;">Frontend</span></summary>
+  <h3>문제 상황</h3> 
+- 프론트엔드 CI/CD 파이프라인 중 front-cd.yml에서 배포 단계 실행 시, kube set image 명령에 사용되는 이미지 태그가 비어있는 문제가 발생
+- $env:IMAGE_TAG 로 지정된 값이 비어 있어 최종 $FULL_IMAGE 값이 정상적으로 구성되지 않음.
+- 로그 상에서는 ${{ github.sha }} 또는 ${{ env.GITHUB_SHA }} 값이 비어 있었음.
+
+<h3>원인 분석</h3> 
+- 초기에는 frontend-cd.yml의 테스트를 위해 트리거를 push 이벤트로 설정했었음. 이 경우에는 GITHUB_SHA가 현재 워크플로우의 커밋 SHA로 자동 주입되어 정상 동작함
+- 그러나 이후 트리거를 workflow_run으로 변경 시 문제 발생
+- workflow_run 이벤트에서는 현재 실행 중인 워크플로우의 github.sha가 아니라 상위 워크플로우(CI)의 SHA 값을 참조해야함. 즉, ${{ github.event.workflow_run.head_sha }} 를 사용해야 정확히 연결됨
+
+<h3>해결 방법</h3>
+- env에 이미지태그를 상위 워크플로우의 SHA 값을 주어 해결. IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
+
+<h3>결과</h3>
+- frontend-cd.yml에서 $FULL_IMAGE가 정상적으로 ${DOCKER_USER}/${IMAGE_NAME}:${commit_sha} 형식으로 생성 됨
+- CD 파이프라인이 CI 결과와 동일한 커밋의 이미지를 배포하도록 구현
+- kubectl set image 시 이미지 태그명 불일치 문제 해결
+</details>
 
 
 
 
-
-## <a id="requirements"></a>23. CI/CD 회고록
+## <a id="requirements"></a>24. CI/CD 회고록
 | 이름                                    | 회고 내용                                           |
 |--------------|-----------------------------------------------------------------------------------------------------------------|
 |      최정필        | 팀장으로 진행한 첫 프로젝트였는데 팀원분들이 잘 따라와주셔서 좋았습니다. 그러나 CICD프로젝트를 진행하며 알아야 할 개념이 매우 많아 왜 DevOps 엔지니어가 연봉을 많이 받는지도 직접 겪게 되었습니다. 이번에 Github Actions를 시작으로 차근차근 AWS도 배우고 싶네요.    |
