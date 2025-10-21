@@ -67,7 +67,7 @@ spotless {
         cleanthat()
         palantirJavaFormat()
         formatAnnotations()
-        targetExclude("src/main/generated/**/*.java")
+        targetExclude("src/main/generated/**/*.java", "src\\main\\generated\\**\\*.java")
     }
 }
 
