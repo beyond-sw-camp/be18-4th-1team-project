@@ -20,3 +20,4 @@ jobs:
             ${{ github.actor }}님이 ${{ github.repository }} 저장소의 `${{ github.ref_name }}` 브랜치에서 ${{ github.event_name }}하였습니다.
             
             **[GitHub Actions 실행 링크]**(${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            
