@@ -1,30 +1,19 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 PROJECT_ROOT=$(git rev-parse --show-toplevel)
-# OS에 따라 Gradle Wrapper 명령어 설정
-if [ "$(expr substr $(uname -s) 1 5)" == "MINGW" ]; then
-    # Windows (Git Bash 환경)
+
+# Gradle Wrapper 선택
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win"* ]]; then
     GRADLEW_CMD="./gradlew.bat"
 else
-    # Linux/macOS
     GRADLEW_CMD="./gradlew"
 fi
 
-# Part 1: 스테이징된 파일 목록 가져오기
-stagedFiles=$(git diff --staged --name-only)
-
-# Part 2: Spotless 적용
 echo "Running spotlessApply. Formatting code..."
-cd $PROJECT_ROOT && $GRADLEW_CMD spotlessApply
+cd "$PROJECT_ROOT" && $GRADLEW_CMD spotlessApply
+status=$?
 
-if [ $? -ne 0 ]; then
-  echo "Spotless apply failed! Fix formatting and re-commit."
+if [ $status -ne 0 ]; then
+  echo "Spotless apply failed!"
   exit 1
 fi
-
-# Part 3: 다시 add 해서 변경사항 반영
-for file in $stagedFiles; do
-  if test -f "$file"; then
-    git add $file
-  fi
-done
