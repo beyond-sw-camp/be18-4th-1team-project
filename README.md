@@ -948,3 +948,18 @@
   <hr>
 </details>
 <br>
+
+## <a id="requirements"></a>21. CI/CD 예시
+<details>
+  <summary><b>Frontend</b></summary>
+  <br>
+  유튜브 링크 : https://youtu.be/zuKj8JPYudI
+</details>
+<details>
+  <summary><b>Backend</b></summary>
+  <br>
+  ci 유튜브 링크 : https://youtu.be/w86Egdabwm8
+  <br>
+  <br>
+  cicd 유튜브 링크 : https://youtu.be/35PrVQr4JnY
+</details>
