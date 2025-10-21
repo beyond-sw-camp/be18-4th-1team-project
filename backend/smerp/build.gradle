@@ -95,7 +95,7 @@ clean {
 }
 
 tasks.register('updateGitHooks', Copy) {
-    from './scripts/pre-commit'
+    from './backend/smerp/scripts/pre-commit'
     into './.git/hooks'
 }
 
