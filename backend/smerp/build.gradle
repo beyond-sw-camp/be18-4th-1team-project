@@ -99,9 +99,23 @@ tasks.register('updateGitHooks', Copy) {
     into './.git/hooks'
 }
 
-tasks.register('makeGitHooksExecutable', Exec) {
-    commandLine 'chmod', '+x', './.git/hooks/pre-commit'
+tasks.register('makeGitHooksExecutable') {
     dependsOn updateGitHooks
+    doLast {
+        def isWindows = System.getProperty("os.name").toLowerCase().contains("win")
+        if (!isWindows) {
+            exec {
+                commandLine 'chmod', '+x', './.git/hooks/pre-commit'
+            }
+        } else {
+            // Windows의 경우 PowerShell 명령으로 실행 권한 대체
+            println "Skipping chmod (Windows detected) — git hook already copied."
+        }
+    }
+}
+
+tasks.named('compileJava') {
+    dependsOn 'makeGitHooksExecutable'
 }
 
 compileJava.dependsOn makeGitHooksExecutable

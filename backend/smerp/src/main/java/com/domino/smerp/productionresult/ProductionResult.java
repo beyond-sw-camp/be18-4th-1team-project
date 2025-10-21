@@ -2,6 +2,7 @@ package com.domino.smerp.productionresult;
 
 import com.domino.smerp.common.BaseEntity;
 import com.domino.smerp.item.Item;
+import com.domino.smerp.item.Item;
 import com.domino.smerp.user.User;
 import com.domino.smerp.warehouse.Warehouse;
 import com.domino.smerp.workorder.WorkOrder;
