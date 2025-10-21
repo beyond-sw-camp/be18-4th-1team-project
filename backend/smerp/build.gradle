@@ -118,4 +118,8 @@ tasks.named('compileJava') {
     dependsOn 'makeGitHooksExecutable'
 }
 
+tasks.named('compileJava') {
+    dependsOn 'spotlessApply'
+}
+
 compileJava.dependsOn makeGitHooksExecutable
