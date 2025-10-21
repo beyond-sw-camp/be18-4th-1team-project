@@ -23,16 +23,31 @@ jobs:
             이벤트: ${{ github.event_name }}
             
             ${{ 
+              # PUSH 이벤트 처리
               github.event_name == 'push' && 
-              format('브랜치: [{}](https://github.com/{}/tree/{})\n커밋: [{}]({})', github.ref_name, github.repository, github.ref_name, github.sha, format('https://github.com/{}/commit/{}', github.repository, github.sha)) ||
+              format('브랜치: [{0}](https://github.com/{1}/tree/{0})\n커밋: [{2}](https://github.com/{1}/commit/{2})', 
+                github.ref_name, 
+                github.repository, 
+                github.sha
+              ) ||
             
+              # PULL REQUEST 이벤트 처리
               github.event_name == 'pull_request' && 
-              format('PR 제목: [{}]({})\nPR 번호: #{}', github.event.pull_request.title, github.event.pull_request.html_url, github.event.pull_request.number) ||
+              format('PR 제목: [{0}]({1})\nPR 번호: #{2}', 
+                github.event.pull_request.title, 
+                github.event.pull_request.html_url, 
+                github.event.pull_request.number
+              ) ||
             
+              # ISSUES 이벤트 처리
               github.event_name == 'issues' && 
-              format('이슈: [{}]({})', github.event.issue.title, github.event.issue.html_url) ||
+              format('이슈: [{0}]({1})', 
+                github.event.issue.title, 
+                github.event.issue.html_url
+              ) ||
             
-              format('브랜치: {}', github.ref_name) 
+              # 기타 이벤트 처리
+              format('브랜치: {0}', github.ref_name) 
             }}
             
             GitHub Actions 실행 링크: [클릭하여 이동](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
