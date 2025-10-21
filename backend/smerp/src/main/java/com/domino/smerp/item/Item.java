@@ -30,6 +30,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.ToString;
+import lombok.ToString;
+import lombok.ToString;
+import lombok.ToString;
+import lombok.ToString;
 import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.envers.Audited;
 

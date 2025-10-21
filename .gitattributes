@@ -1,1 +1,1 @@
-scripts/pre-commit text eol=lf
+backend/smerp/scripts/pre-commit text eol=lf

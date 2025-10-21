@@ -2,7 +2,13 @@
 
 # === Root & Gradle Path 설정 ===
 PROJECT_ROOT=$(git rev-parse --show-toplevel)
-GRADLEW_PATH="$PROJECT_ROOT/backend/smerp/gradlew.bat"   #윈도우용 Gradle Wrapper 경로
+
+# OS 감지 (Windows, macOS, Linux 대응)
+if [ "$(uname -s | tr '[:upper:]' '[:lower:]')" = "darwin" ] || [ "$(uname -s | tr '[:upper:]' '[:lower:]')" = "linux" ]; then
+    GRADLEW_PATH="$PROJECT_ROOT/backend/smerp/gradlew"        # macOS/Linux용
+else
+    GRADLEW_PATH="$PROJECT_ROOT/backend/smerp/gradlew.bat"    # Windows용
+fi
 
 # === Spotless 실행 ===
 echo "Running spotlessApply. Formatting code..."
