@@ -1,19 +1,22 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
+# === Root & Gradle Path 설정 ===
 PROJECT_ROOT=$(git rev-parse --show-toplevel)
+GRADLEW_PATH="$PROJECT_ROOT/backend/smerp/gradlew.bat"   #윈도우용 Gradle Wrapper 경로
 
-# Gradle Wrapper 선택
-if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win"* ]]; then
-    GRADLEW_CMD="./gradlew.bat"
-else
-    GRADLEW_CMD="./gradlew"
-fi
-
+# === Spotless 실행 ===
 echo "Running spotlessApply. Formatting code..."
-cd "$PROJECT_ROOT" && $GRADLEW_CMD spotlessApply
-status=$?
+cd "$PROJECT_ROOT/backend/smerp" && "$GRADLEW_PATH" spotlessApply
 
-if [ $status -ne 0 ]; then
+if [ $? -ne 0 ]; then
   echo "Spotless apply failed!"
   exit 1
 fi
+
+# === 변경 파일 다시 add ===
+stagedFiles=$(git diff --staged --name-only)
+for file in $stagedFiles; do
+  if test -f "$file"; then
+    git add "$file"
+  fi
+done
